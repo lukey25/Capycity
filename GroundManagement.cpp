@@ -147,7 +147,6 @@ void reduceMenu() {
     cout << "5. y-Position, des zu verkleinernden Gebaeudes. Genau gesagt die y-Postition der linkeren oberen Ecke" << endl;
     cin >> positionY;   
     reduce(buildingLength, buildingWidth, positionX, positionY, type);
-    cout << "what wrong?" << endl;
     return;
 }
 
@@ -185,10 +184,10 @@ void build(Building type, int buildingLength, int buildingWidth, int positionX, 
 
 void reduce(int buildingLength, int buildingWidth, int positionX, int positionY, Building type) { //nicht ganz Fehlerproof, für den Fall das Gebäude gleicher Art direkt aneinander stehen
     checkIfOutOfBounds(buildingLength, buildingWidth, positionX, positionY);
-    if(buildingArea[positionX + buildingLength][positionY] == type || buildingArea[positionX][positionY + buildingWidth] == type) {
-        cout << "Bitte pruefen Sie ihre Eingabe. Es muss die exakte Laenge sowie Breite des zu verkleinernden Gebaeudes angegeben werden" << endl;
-        return;
-    } //check if input area is smaller than the size of a given building
+    //if(buildingArea[positionX + buildingLength][positionY] == type || buildingArea[positionX][positionY + buildingWidth] == type) {
+        //cout << "Bitte pruefen Sie ihre Eingabe. Es muss die exakte Laenge sowie Breite des zu verkleinernden Gebaeudes angegeben werden" << endl;
+        //return;
+    //} //check if input area is smaller than the size of a given building
     for(int i = positionX; i < positionX + buildingLength; i++) {
         for(int j = positionY; j < positionY + buildingWidth; j++) {
             if(buildingArea[i][j] != type) {    //check if input area corresponds with a given building (same building type?, input area bigger than a given building size?)
