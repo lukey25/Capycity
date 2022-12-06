@@ -6,10 +6,9 @@ class Building {
         int label;
         int width;
         int length;
-        Material** matList;
-        Material** createMatList();
-        Material** createMatList(int wood, int metal, int plastic);
-        int schießen();
+        Material* matList;
+        Material* createMatList();
+        Material* createMatList(int wood, int metal, int plastic);
 
     public:
         Building(int _lenght, int _width);

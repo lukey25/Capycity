@@ -1,6 +1,6 @@
 #include "Material.h"
 
-class Plastic : Material {
+class Plastic : public Material {
     private:
         static float price;
     public:

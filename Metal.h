@@ -1,7 +1,7 @@
 #include "Material.h"
 #include "Material.cpp"
 
-class Metal : Material {
+class Metal : public Material {
     private:
         static float price;
     public:
