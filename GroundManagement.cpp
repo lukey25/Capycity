@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
 };
 
 
-Building** createBuildingArea(int length, int width) {
+Building** createBuildingArea(int length, int width) { //für die gegebene Anwendung wären die Funktionsparameter nicht notwendig
     Building **arr = new Building*[length];
     for(int i = 0; i < length; i++) {
         arr[i] = new Building[width];
