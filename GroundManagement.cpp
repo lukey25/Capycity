@@ -2,6 +2,11 @@
 #include <sstream>
 #include <cmath>
 #include "GroundManagement.h"
+#include "Empty.h"
+#include "Solarpower.h"
+#include "Windpower.h"
+#include "Waterpower.h"
+
 using std::cout;
 using std::cin;
 using std::endl;
@@ -11,7 +16,7 @@ using std::stringstream;
 
 int length = 0;
 int width = 0;
-Building **buildingArea; //deklarieren eines 2 dimensionalen Arrays
+Building** buildingArea; //deklarieren eines 2 dimensionalen Arrays
 
 int main(int argc, char** argv) {
     string len = string(argv[1]);
@@ -36,7 +41,7 @@ Building** createBuildingArea(int length, int width) { //für die gegebene Anwen
     }
     for(int i = 0; i < length; i++) {
         for(int j = 0; j < width; j++) {
-            arr[i][j] = Empty;
+            arr[i][j] = Empty(i, j);
         }
     }
     return arr;

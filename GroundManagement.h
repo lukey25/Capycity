@@ -1,4 +1,5 @@
-#include "BuildingTypes.cpp"
+#include "Building.h"
+#include "Building.cpp"
 
 Building** createBuildingArea(int width, int length);
 void mainMenu();

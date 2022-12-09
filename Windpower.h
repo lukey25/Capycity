@@ -4,5 +4,5 @@ class Windpower : Building {
     private:
         static float basic_price;
     public:
-        Windpower(int _length, int _width);    
+        Windpower(int _length, int _width, int _posX, int _posY);    
 };

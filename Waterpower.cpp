@@ -6,8 +6,8 @@
 
 float Waterpower::basic_price = 3.3f;
 
-Waterpower::Waterpower(int _length, int _width) { 
-    Building(_length, _width); //initialisieren von length, width und price im Superkonstruktor 
+Waterpower::Waterpower(int _length, int _width, int _posX, int _posY) { 
+    Building(_length, _width, _posX, _posY); //initialisieren von length, width und price im Superkonstruktor 
     label = 1;
     matList = createMatList(); //benötigte Materialien pro Feld
 }
