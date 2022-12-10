@@ -1,4 +1,4 @@
-#include "Material.cpp"
+#include "Material.h"
 
 class Building {
     protected:

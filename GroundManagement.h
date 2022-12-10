@@ -1,7 +1,7 @@
 #include "Building.h"
 #include "Building.cpp"
 
-Building** createBuildingArea(int width, int length);
+Building** createBuildingArea(int length, int width);
 void mainMenu();
 void buildMenu();
 void bluePrint();

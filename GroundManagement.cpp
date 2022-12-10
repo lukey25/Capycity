@@ -7,6 +7,7 @@
 #include "Windpower.h"
 #include "Waterpower.h"
 
+
 using std::cout;
 using std::cin;
 using std::endl;
@@ -45,7 +46,7 @@ Building** createBuildingArea(int length, int width) { //für die gegebene Anwen
         }
     }
     return arr;
-};
+}
 
 void mainMenu() {
     while(true) {
@@ -81,7 +82,7 @@ void buildMenu() {
     int positionY;
     int buildingLength;
     int buildingWidth;
-    Building type = Empty;
+    Building type;
     cout << "Bitte geben sie folgende Informationen in die Konsole ein:" << endl;
     cout << "1. Welche Art von Gebaeude soll gebaut werden (waterpower, windpower, solarpower):" << endl;
     cin >> input;
