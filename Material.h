@@ -1,3 +1,5 @@
+#ifndef MATERIAL
+#define MATERIAL
 
 class Material { //bestenfalls abstract machen
 
@@ -6,3 +8,5 @@ class Material { //bestenfalls abstract machen
         
 
 };
+
+#endif

@@ -1,3 +1,5 @@
+#ifndef BUILDING
+#define BUILDING
 #include "Material.h"
 
 class Building {
@@ -25,3 +27,5 @@ class Building {
         void setWidth(int _width);
         void setPos(int x, int y);
 };
+
+#endif
