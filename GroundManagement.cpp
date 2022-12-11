@@ -8,6 +8,7 @@
 #include "Waterpower.h"
 
 
+
 using std::cout;
 using std::cin;
 using std::endl;
@@ -17,7 +18,8 @@ using std::stringstream;
 
 int length = 0;
 int width = 0;
-Building** buildingArea; //deklarieren eines 2 dimensionalen Arrays
+Building* buildingsList = nullptr; //Liste der bestehenden Gebäude
+int** map; //2-dimensionales Array für den blueprint zur Ausgabe
 
 int main(int argc, char** argv) {
     string len = string(argv[1]);
@@ -29,20 +31,35 @@ int main(int argc, char** argv) {
     ss << wid;
     ss >> width;
     cout << length << " " << width << endl;
-    buildingArea = createBuildingArea(length, width); //e
+    map = createMap(length, width); //e
     mainMenu();
     return 0;
 };
 
 
-Building** createBuildingArea(int length, int width) { //für die gegebene Anwendung wären die Funktionsparameter nicht notwendig
-    Building **arr = new Building*[length];
+void createBuildingsList(Building* arr, Building &building) { //für die gegebene Anwendung wären die Funktionsparameter nicht notwendig
+    Building* newArr = new Building[sizeof(arr) + 1];
+    for(int i = 0; i < sizeof(arr) - 1; i++) {
+        newArr[i] = arr[i];
+    }
+    newArr[sizeof(arr) + 1] = building;
+    delete [] buildingsList;
+    buildingsList = newArr;
+}
+
+void createBuildingsList(Building &building) {
+    buildingsList = new Building[1];
+    buildingsList[0] = building;
+}
+
+int** createMap(int length, int width) { //für die gegebene Anwendung wären die Funktionsparameter nicht notwendig
+    int **arr = new int*[length];
     for(int i = 0; i < length; i++) {
-        arr[i] = new Building[width];
+        arr[i] = new int[width];
     }
     for(int i = 0; i < length; i++) {
         for(int j = 0; j < width; j++) {
-            arr[i][j] = Empty(i, j);
+            arr[i][j] = 0;
         }
     }
     return arr;
