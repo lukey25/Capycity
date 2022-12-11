@@ -37,20 +37,22 @@ int main(int argc, char** argv) {
 };
 
 
-void createBuildingsList(Building* arr, Building &building) { //für die gegebene Anwendung wären die Funktionsparameter nicht notwendig
-    Building* newArr = new Building[sizeof(arr) + 1];
-    for(int i = 0; i < sizeof(arr) - 1; i++) {
-        newArr[i] = arr[i];
+void updateBuildingsList(Building &building) { //für die gegebene Anwendung wären die Funktionsparameter nicht notwendig
+    if(buildingsList == nullptr) {              //Namen noch ändern in updateBuildingsList
+        buildingsList = new Building[1];
+        buildingsList[0] = building;
+    } else {
+        int arrSize = sizeof(buildingsList)/sizeof(buildingsList[0]);
+        Building* newArr = new Building[arrSize + 1];
+        for(int i = 0; i < arrSize; i++) {
+            newArr[i] = buildingsList[i];
+        }
+        newArr[arrSize + 1] = building;
+        delete [] buildingsList;
+        buildingsList = newArr;
     }
-    newArr[sizeof(arr) + 1] = building;
-    delete [] buildingsList;
-    buildingsList = newArr;
 }
 
-void createBuildingsList(Building &building) {
-    buildingsList = new Building[1];
-    buildingsList[0] = building;
-}
 
 int** createMap(int length, int width) { //für die gegebene Anwendung wären die Funktionsparameter nicht notwendig
     int **arr = new int*[length];
@@ -99,18 +101,18 @@ void buildMenu() {
     int positionY;
     int buildingLength;
     int buildingWidth;
-    Building type;
+    int label;
     cout << "Bitte geben sie folgende Informationen in die Konsole ein:" << endl;
     cout << "1. Welche Art von Gebaeude soll gebaut werden (waterpower, windpower, solarpower):" << endl;
     cin >> input;
     if(input.compare("waterpower") == 0 || input.compare("Waterpower") == 0) {
-        type = Waterpower;
+        label = 2;
     }
     else if(input.compare("windpower") == 0) {
-        type = Windpower;
+        label = 1;
     }
     else if(input.compare("solarpower") == 0) {
-        type = Solarpower;
+        label = 3;
     }
     else {
         cout << "Bitte ueberpruefen sie, ob ihre Eingabe mit einer der Eingabemoeglichkeiten (waterpower, windpower, solarpower) uebereinstimmt" << endl;
@@ -125,11 +127,8 @@ void buildMenu() {
     cin >> positionX;
     cout << "5. y-Position, an dem das Gebaeude gebaut werden soll. Genau gesagt die y-Postition der linkeren oberen Ecke" << endl;
     cin >> positionY;
-    //cout << "z.B.: waterpower 20 25 3/3" << endl;
-    //cout << "           1.     2. 3. 4." << endl;
-    //cin >> input;
     if(checkGround(buildingLength, buildingWidth, positionX, positionY)) {
-        build(type, buildingLength, buildingWidth, positionX, positionY);
+        build(label, buildingLength, buildingWidth, positionX, positionY);
     } else {
         cout << "Bitte pruefen Sie ihre Eingabe. Das Gebaeude muss innerhalb des Baugrunds liegen und darf sich mit keinem anderen Gebaeude ueberschneiden" << endl;
         return;
@@ -141,35 +140,12 @@ void reduceMenu() {
     string input;
     int positionX;
     int positionY;
-    int buildingLength;
-    int buildingWidth;
-    Building type = Empty;
-    cout << "Bitte geben sie folgende Informationen in die Konsole ein:" << endl;
-    cout << "1. Welche Art von Gebaeude soll verkleinert werden (waterpower, windpower, solarpower):" << endl;
-    cin >> input;
-    if(input.compare("waterpower") == 0 || input.compare("Waterpower") == 0) {
-        type = Waterpower;
-    }
-    else if(input.compare("windpower") == 0) {
-        type = Windpower;
-    }
-    else if(input.compare("solarpower") == 0) {
-        type = Solarpower;
-    }
-    else {
-        cout << "Bitte ueberpruefen sie, ob ihre Eingabe mit einer der Eingabemoeglichkeiten (waterpower, windpower, solarpower) uebereinstimmt" << endl;
-        return;
-    }
-    cout << "2. Laenge des Gebaeudes" << endl;
-    cin >> buildingLength;
-    //vielleicht hier irgendwo auch den aktuellen Bauplan mal anzeigen, ganz am Anfang des buildMenu Aufrufs
-    cout << "3. Breite des Gebaeudes" << endl;
-    cin >> buildingWidth;
-    cout << "4. x-Position, des zu verkleinernden Gebaeudes. Genau gesagt die x-Postition der linkeren oberen Ecke" << endl;
+    cout << "Bitte geben sie die x-Position des zu verkleinernden Gebaeudes ein, genau gesagt die x-Postition der linkeren oberen Ecke:" << endl;
     cin >> positionX;
-    cout << "5. y-Position, des zu verkleinernden Gebaeudes. Genau gesagt die y-Postition der linkeren oberen Ecke" << endl;
-    cin >> positionY;   
-    reduce(buildingLength, buildingWidth, positionX, positionY, type);
+    cout << "Bitte geben sie die x-Position des zu verkleinernden Gebaeudes ein, genau gesagt die x-Postition der linkeren oberen Ecke:" << endl;
+    cin >> positionY;  
+    Building b = findBuilding(positionX, positionY); 
+    reduce(b);
     return;
 }
 
@@ -177,7 +153,7 @@ void bluePrint() {
     cout << endl << endl;
     for(int i = 0; i < width; i++) { 
         for(int j = 0; j < length; j++) {
-            cout << buildingArea[j][i] << " "; 
+            cout << map[j][i] << " "; 
         }
         cout << endl;
     }
@@ -188,7 +164,7 @@ bool checkGround(int buildingLength, int buildingWidth, int positionX, int posit
     checkIfOutOfBounds(buildingLength, buildingWidth, positionX, positionY);
     for(int i = positionX; i < positionX + buildingLength; i++) {
         for(int j = positionY; j < positionY + buildingWidth; j++) {
-            if(buildingArea[i][j] != Empty) {
+            if(map[i][j] != 0) {
                 return false;
             } 
         }
@@ -196,40 +172,58 @@ bool checkGround(int buildingLength, int buildingWidth, int positionX, int posit
     return true;
 }
 
-void build(Building type, int buildingLength, int buildingWidth, int positionX, int positionY) {
-    for(int i = positionX; i < positionX + buildingLength; i++) {
+void build(int label, int buildingLength, int buildingWidth, int positionX, int positionY) {
+    Building b;
+    switch(label) {
+        case 1:
+            b = Waterpower(buildingLength, buildingWidth, positionX, positionY);
+            break;
+        case 2:
+            b = Windpower(buildingLength, buildingWidth, positionX, positionY);
+            break;
+        case 3:
+            b = Solarpower(buildingLength, buildingWidth, positionX, positionY);
+        default:
+            ;
+    }
+    updateBuildingsList(b);
+    for(int i = positionX; i < positionX + buildingLength; i++) {   //update map
         for(int j = positionY; j < positionY + buildingWidth; j++) {
-            buildingArea[i][j] = type;
+            map[i][j] = b.getLabel();
         }
     }
     cout << "Der Bau wurde erfolgreich abgeschlossen!" << endl;
 }
 
-void reduce(int buildingLength, int buildingWidth, int positionX, int positionY, Building type) { //nicht ganz Fehlerproof, für den Fall das Gebäude gleicher Art direkt aneinander stehen
-    checkIfOutOfBounds(buildingLength, buildingWidth, positionX, positionY);
-    //if(buildingArea[positionX + buildingLength][positionY] == type || buildingArea[positionX][positionY + buildingWidth] == type) {
+void reduce(Building &b) { //nicht ganz Fehlerproof, für den Fall das Gebäude gleicher Art direkt aneinander stehen
+    //checkIfOutOfBounds(buildingLength, buildingWidth, positionX, positionY);
+    //if(map[positionX + buildingLength][positionY] == type || map[positionX][positionY + buildingWidth] == type) {
         //cout << "Bitte pruefen Sie ihre Eingabe. Es muss die exakte Laenge sowie Breite des zu verkleinernden Gebaeudes angegeben werden" << endl;
         //return;
     //} //check if input area is smaller than the size of a given building
-    for(int i = positionX; i < positionX + buildingLength; i++) {
-        for(int j = positionY; j < positionY + buildingWidth; j++) {
-            if(buildingArea[i][j] != type) {    //check if input area corresponds with a given building (same building type?, input area bigger than a given building size?)
+    for(int i = b.getPosX(); i < b.getPosX() + b.getLength(); i++) {
+        for(int j = b.getPosY(); j < b.getPosY() + b.getWidth(); j++) {
+            if(map[i][j] != b.getLabel()) {    //check if input area corresponds with a given building (same building type?, input area bigger than a given building size?)
                 cout << "Bitte pruefen sie ihre Eingabe. Gebaeudetyp stimmt nicht mit den anderen Eingaben ueberein oder die Koordinaten sind keinem Gebaeude zuzuordnen" << endl;
                 return;
             }
         }
     }
-    for(int i = positionX; i < positionX + buildingLength; i++) {
-        buildingArea[i][positionY] = Empty;
+    b.setLength(b.getLength() - 1); //update Object-attributes
+    b.setWidth(b.getWidth() - 1);
+    b.setPos(b.getPosX() + 1, b.getPosY() + 1);
+    updateBuildingsList(b);
+    for(int i = b.getPosX(); i < b.getPosX() + b.getLength(); i++) { //update map
+        map[i][b.getPosY()] = 0;
     }
-    for(int i = positionX; i < positionX + buildingLength; i++) {
-        buildingArea[i][positionY + buildingWidth - 1] = Empty;
+    for(int i = b.getPosX(); i < b.getPosX() + b.getLength(); i++) {
+        map[i][b.getPosY() + b.getWidth() - 1] = 0;
     }
-    for(int i = positionY; i < positionY + buildingWidth; i++) {
-        buildingArea[positionX][i] = Empty;
+    for(int i = b.getPosY(); i < b.getPosY() + b.getWidth(); i++) {
+        map[b.getPosX()][i] = 0;
     }
-    for(int i = positionY; i < positionY + buildingWidth; i++) {
-        buildingArea[positionX + buildingLength - 1][i] = Empty;
+    for(int i = b.getPosY(); i < b.getPosY() + b.getWidth(); i++) {
+        map[b.getPosX() + b.getLength() - 1][i] = 0;
     }
     cout << "Das Verkleinern war erfolgreich!" << endl;
 }
@@ -238,5 +232,14 @@ void checkIfOutOfBounds(int inputLength, int inputWidth, int posX, int posY) {
     if(inputLength + posX > length || inputWidth + posY > width) {
         cout << "Bitte ueberpruefen Sie ihre Eingabe. Die Eingaben duerfen nicht ueber die Baugrundgrenze hinaus gehen!" << endl;
         mainMenu();
+    }
+}
+
+Building& findBuilding(int posX, int posY) {
+    int size = sizeof(buildingsList)/sizeof(buildingsList[0]);
+    for(int i = 0; i < size; i++) {
+        if(buildingsList[i].getPosX() == posX && buildingsList[i].getPosY() == posY) {
+            return buildingsList[i];
+        }
     }
 }

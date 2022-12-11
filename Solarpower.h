@@ -1,6 +1,6 @@
 #include "Building.h"
 
-class Solarpower : Building {
+class Solarpower : public Building {
     private:
         static float basic_price;  
     public:

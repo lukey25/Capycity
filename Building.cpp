@@ -13,3 +13,20 @@ Building::Building(int _posX, int _posY) {
     coord[1] = _posY;
     price = 0.0f;
 }
+
+int Building::getLabel() {
+    return label;
+}
+
+void setLength(int _length) {
+    length = _length;
+}
+
+void setWidth(int _width) {
+    width = _width;
+}
+
+void Building::setPos(int x, int y) {
+    coord[0] = x;
+    coord[1] = y;
+}
