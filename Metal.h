@@ -1,5 +1,5 @@
+
 #include "Material.h"
-#include "Material.cpp"
 
 class Metal : public Material {
     private:

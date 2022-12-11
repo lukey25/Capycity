@@ -1,4 +1,5 @@
 #include "Building.h"
+#include "Material.h"
 
 class Waterpower : public Building {
     private:

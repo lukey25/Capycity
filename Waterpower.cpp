@@ -1,5 +1,4 @@
 #include "Waterpower.h"
-#include "Material.cpp"
 #include "Metal.h"
 #include "Wood.h"
 #include "Plastic.h"

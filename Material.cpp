@@ -1,5 +1,9 @@
 #include "Material.h"
 
+
+Material::Material() {
+    
+}
 //Material::Material(float _price) {
 //    price = _price;
 //}

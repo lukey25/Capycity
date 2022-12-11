@@ -8,7 +8,6 @@
 #include "Waterpower.h"
 
 
-
 using std::cout;
 using std::cin;
 using std::endl;
@@ -16,28 +15,28 @@ using std::string;
 using std::stringstream;
 
 
-int length = 0;
-int width = 0;
-Building* buildingsList = nullptr; //Liste der bestehenden Gebäude
-int** map; //2-dimensionales Array für den blueprint zur Ausgabe
-
 int main(int argc, char** argv) {
+    GroundManagement gm = GroundManagement(); //vielleicht noch umbenennen in CapycitySim //entweder Methoden der Klasse static machen oder ein Objekt davon erstellen, auf dem man operiert
     string len = string(argv[1]);
     string wid = string(argv[2]);
     stringstream ss;
     ss << len;
-    ss >> length;
+    ss >> gm.length;
     ss.clear();
     ss << wid;
-    ss >> width;
-    cout << length << " " << width << endl;
-    map = createMap(length, width); //e
-    mainMenu();
+    ss >> gm.width;
+    gm.map = gm.createMap(gm.length, gm.width); //e
+    gm.mainMenu();
     return 0;
 };
 
+GroundManagement::GroundManagement() {
+    length = 0;
+    width = 0;
+    buildingsList = nullptr;
+}
 
-void updateBuildingsList(Building &building) { //für die gegebene Anwendung wären die Funktionsparameter nicht notwendig
+void GroundManagement::updateBuildingsList(Building &building) { //für die gegebene Anwendung wären die Funktionsparameter nicht notwendig
     if(buildingsList == nullptr) {              //Namen noch ändern in updateBuildingsList
         buildingsList = new Building[1];
         buildingsList[0] = building;
@@ -54,7 +53,7 @@ void updateBuildingsList(Building &building) { //für die gegebene Anwendung wä
 }
 
 
-int** createMap(int length, int width) { //für die gegebene Anwendung wären die Funktionsparameter nicht notwendig
+int** GroundManagement::createMap(int length, int width) { //für die gegebene Anwendung wären die Funktionsparameter nicht notwendig
     int **arr = new int*[length];
     for(int i = 0; i < length; i++) {
         arr[i] = new int[width];
@@ -67,7 +66,7 @@ int** createMap(int length, int width) { //für die gegebene Anwendung wären di
     return arr;
 }
 
-void mainMenu() {
+void GroundManagement::mainMenu() {
     while(true) {
         cout << "Hauptmenue:" << endl;
         cout << "Um Gebaeude zu setzen, tippe: build" << endl;
@@ -95,7 +94,7 @@ void mainMenu() {
     }
 }
 
-void buildMenu() {
+void GroundManagement::buildMenu() {
     string input;
     int positionX;
     int positionY;
@@ -136,7 +135,7 @@ void buildMenu() {
     return;
 }
 
-void reduceMenu() {
+void GroundManagement::reduceMenu() {
     string input;
     int positionX;
     int positionY;
@@ -149,7 +148,7 @@ void reduceMenu() {
     return;
 }
 
-void bluePrint() {
+void GroundManagement::bluePrint() {
     cout << endl << endl;
     for(int i = 0; i < width; i++) { 
         for(int j = 0; j < length; j++) {
@@ -160,7 +159,7 @@ void bluePrint() {
     return;
 }
 
-bool checkGround(int buildingLength, int buildingWidth, int positionX, int positionY) {
+bool GroundManagement::checkGround(int buildingLength, int buildingWidth, int positionX, int positionY) {
     checkIfOutOfBounds(buildingLength, buildingWidth, positionX, positionY);
     for(int i = positionX; i < positionX + buildingLength; i++) {
         for(int j = positionY; j < positionY + buildingWidth; j++) {
@@ -172,7 +171,7 @@ bool checkGround(int buildingLength, int buildingWidth, int positionX, int posit
     return true;
 }
 
-void build(int label, int buildingLength, int buildingWidth, int positionX, int positionY) {
+void GroundManagement::build(int label, int buildingLength, int buildingWidth, int positionX, int positionY) {
     Building b;
     switch(label) {
         case 1:
@@ -195,7 +194,7 @@ void build(int label, int buildingLength, int buildingWidth, int positionX, int 
     cout << "Der Bau wurde erfolgreich abgeschlossen!" << endl;
 }
 
-void reduce(Building &b) { //nicht ganz Fehlerproof, für den Fall das Gebäude gleicher Art direkt aneinander stehen
+void GroundManagement::reduce(Building &b) { //nicht ganz Fehlerproof, für den Fall das Gebäude gleicher Art direkt aneinander stehen
     //checkIfOutOfBounds(buildingLength, buildingWidth, positionX, positionY);
     //if(map[positionX + buildingLength][positionY] == type || map[positionX][positionY + buildingWidth] == type) {
         //cout << "Bitte pruefen Sie ihre Eingabe. Es muss die exakte Laenge sowie Breite des zu verkleinernden Gebaeudes angegeben werden" << endl;
@@ -228,14 +227,14 @@ void reduce(Building &b) { //nicht ganz Fehlerproof, für den Fall das Gebäude 
     cout << "Das Verkleinern war erfolgreich!" << endl;
 }
 
-void checkIfOutOfBounds(int inputLength, int inputWidth, int posX, int posY) {
+void GroundManagement::checkIfOutOfBounds(int inputLength, int inputWidth, int posX, int posY) {
     if(inputLength + posX > length || inputWidth + posY > width) {
         cout << "Bitte ueberpruefen Sie ihre Eingabe. Die Eingaben duerfen nicht ueber die Baugrundgrenze hinaus gehen!" << endl;
         mainMenu();
     }
 }
 
-Building& findBuilding(int posX, int posY) {
+Building& GroundManagement::findBuilding(int posX, int posY) {
     int size = sizeof(buildingsList)/sizeof(buildingsList[0]);
     for(int i = 0; i < size; i++) {
         if(buildingsList[i].getPosX() == posX && buildingsList[i].getPosY() == posY) {

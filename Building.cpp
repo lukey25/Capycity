@@ -18,11 +18,11 @@ int Building::getLabel() {
     return label;
 }
 
-void setLength(int _length) {
+void Building::setLength(int _length) {
     length = _length;
 }
 
-void setWidth(int _width) {
+void Building::setWidth(int _width) {
     width = _width;
 }
 

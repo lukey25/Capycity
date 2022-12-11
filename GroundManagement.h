@@ -1,8 +1,14 @@
 #include "Building.h"
-#include "Building.cpp"
 
 class GroundManagement {
     public:
+        int length;
+        int width;
+        Building* buildingsList; //Liste der bestehenden Gebäude
+        int** map; //2-dimensionales Array für den blueprint zur Ausgabe
+
+        GroundManagement();
+
         int** createMap(int length, int width);
         void updateBuildingsList(Building &building);
         //void createBuildingsList(Building* arr, Building &building);

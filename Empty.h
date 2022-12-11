@@ -1,4 +1,4 @@
-#include "Building.h"
+
 #include "Building.cpp"
 
 class Empty : public Building {
