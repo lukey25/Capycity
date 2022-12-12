@@ -241,5 +241,5 @@ Building& GroundManagement::findBuilding(int posX, int posY) {
             return buildingsList[i];
         }
     }
-    //Fehlerfall behandeln
+    return buildingsList[0];//Fehlerfall behandeln
 }
