@@ -4,9 +4,19 @@
 #include "GroundManagement.h"
 #include "Empty.h"
 #include "Solarpower.h"
+#include "Solarpower.cpp"
 #include "Windpower.h"
+#include "Windpower.cpp"
 #include "Waterpower.h"
-
+#include "Waterpower.cpp"
+#include "Material.h"
+#include "Material.cpp"
+#include "Wood.h"
+#include "Wood.cpp"
+#include "Metal.h"
+#include "Metal.cpp"
+#include "Plastic.h"
+#include "Plastic.cpp"
 
 using std::cout;
 using std::cin;

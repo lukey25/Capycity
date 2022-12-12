@@ -11,7 +11,7 @@ Waterpower::Waterpower(int _length, int _width, int _posX, int _posY) {
     matList = createMatList(); //benötigte Materialien pro Feld
 }
 
-Material* Building::createMatList() { //warum die Funktioni über Building aufgerufen werden muss ist mir schleierhaft. Und ob es überhaupt Sinn macht, die zu vererben...
+Material* Waterpower::createMatList() { //warum die Funktioni über Building aufgerufen werden muss ist mir schleierhaft. Und ob es überhaupt Sinn macht, die zu vererben...
     Material* matList = new Material[5];
     matList[0] = Wood();
     matList[1] = Wood();
@@ -21,6 +21,3 @@ Material* Building::createMatList() { //warum die Funktioni über Building aufge
     return matList;
 }
 
-Material* Building::createMatList(int wood, int metal, int plastic) {
-
-}

@@ -1,3 +1,5 @@
+#ifndef PLASTIC
+#define PLASTIC
 #include "Material.h"
 
 class Plastic : public Material {
@@ -6,3 +8,4 @@ class Plastic : public Material {
     public:
         Plastic();
 };
+#endif

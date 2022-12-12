@@ -30,3 +30,19 @@ void Building::setPos(int x, int y) {
     coord[0] = x;
     coord[1] = y;
 }
+
+int Building::getPosX() {
+    return coord[0];
+}
+
+int Building::getPosY() {
+    return coord[1];
+}
+
+int Building::getLength() {
+    return length;
+}
+
+int Building::getWidth() {
+    return width;
+}

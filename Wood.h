@@ -1,3 +1,5 @@
+#ifndef WOOD
+#define WOOD
 #include "Material.h"
 class Wood : public Material {
     private:
@@ -6,3 +8,4 @@ class Wood : public Material {
     public:
         Wood();
 };
+#endif

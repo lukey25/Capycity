@@ -1,4 +1,5 @@
-
+#ifndef METAL
+#define METAL
 #include "Material.h"
 
 class Metal : public Material {
@@ -7,3 +8,4 @@ class Metal : public Material {
     public:
         Metal(); 
 };
+#endif
