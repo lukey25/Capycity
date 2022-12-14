@@ -46,3 +46,7 @@ int Building::getLength() {
 int Building::getWidth() {
     return width;
 }
+
+Building::~Building() { //Destruktor wird ja scheinbar nicht vererbt?
+
+}

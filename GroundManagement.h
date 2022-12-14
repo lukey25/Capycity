@@ -1,10 +1,12 @@
 #include "Building.h"
+#include <vector>
+using std::vector;
 
 class GroundManagement {
     public:
         int length;
         int width;
-        Building* buildingsList; //Liste der bestehenden Gebäude
+        vector<Building> buildingsList; //Liste der bestehenden Gebäude
         int** map; //2-dimensionales Array für den blueprint zur Ausgabe
 
         GroundManagement();
@@ -21,4 +23,5 @@ class GroundManagement {
         void build(int label, int buildingLength, int buildingWidth, int positionX, int positionY);
         void reduce(Building &b);
         Building& findBuilding(int posX, int posY);
+        int findIdx(Building &b);
 };

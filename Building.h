@@ -16,6 +16,7 @@ class Building {
         Building(int _lenght, int _width, int _posX, int _posY);
         Building(int _posX, int _posY);
         Building() = default;
+        ~Building();
         int getLabel();
         int getLength();
         int getWidth();

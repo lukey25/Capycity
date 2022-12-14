@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <cmath>
+#include <vector>
 #include "GroundManagement.h"
 #include "Empty.h"
 #include "Solarpower.h"
@@ -23,6 +24,7 @@ using std::cin;
 using std::endl;
 using std::string;
 using std::stringstream;
+using std::vector;
 
 
 int main(int argc, char** argv) {
@@ -43,23 +45,11 @@ int main(int argc, char** argv) {
 GroundManagement::GroundManagement() {
     length = 0;
     width = 0;
-    buildingsList = nullptr;
+    buildingsList = vector<Building>(8); //Größe defaultmäßig festgelegt
 }
 
-void GroundManagement::updateBuildingsList(Building &building) { //für die gegebene Anwendung wären die Funktionsparameter nicht notwendig
-    if(buildingsList == nullptr) {              //Namen noch ändern in updateBuildingsList
-        buildingsList = new Building[1];
-        buildingsList[0] = building;
-    } else {
-        int arrSize = sizeof(buildingsList)/sizeof(buildingsList[0]);
-        Building* newArr = new Building[arrSize + 1];
-        for(int i = 0; i < arrSize; i++) {
-            newArr[i] = buildingsList[i];
-        }
-        newArr[arrSize + 1] = building;
-        delete [] buildingsList;
-        buildingsList = newArr;
-    }
+void GroundManagement::updateBuildingsList(Building &building) { //da braucht es vielleicht jetzt keine extra Funktion mehr
+    buildingsList.push_back(building);
 }
 
 
@@ -151,7 +141,7 @@ void GroundManagement::reduceMenu() {
     int positionY;
     cout << "Bitte geben sie die x-Position des zu verkleinernden Gebaeudes ein, genau gesagt die x-Postition der linkeren oberen Ecke:" << endl;
     cin >> positionX;
-    cout << "Bitte geben sie die x-Position des zu verkleinernden Gebaeudes ein, genau gesagt die x-Postition der linkeren oberen Ecke:" << endl;
+    cout << "Bitte geben sie die y-Position des zu verkleinernden Gebaeudes ein, genau gesagt die y-Postition der linkeren oberen Ecke:" << endl;
     cin >> positionY;  
     Building b = findBuilding(positionX, positionY); 
     reduce(b);
@@ -218,10 +208,13 @@ void GroundManagement::reduce(Building &b) { //nicht ganz Fehlerproof, für den 
             }
         }
     }
+    //delete Object when length && width reach 0
     b.setLength(b.getLength() - 1); //update Object-attributes
     b.setWidth(b.getWidth() - 1);
     b.setPos(b.getPosX() + 1, b.getPosY() + 1);
-    updateBuildingsList(b);
+    if(b.getLength() <=0 && b.getWidth() <= 0) { 
+        buildingsList.erase(buildingsList.begin() + findIdx(b)); //löscht das Objekt aus der BuildingsList
+    } //(falls Länge und Breite = 0, wird es nicht mehr in der Liste gespeichert sondern gelöscht, wenn der Gültigkeitsbereich der Erstellung verlassen wird)
     for(int i = b.getPosX(); i < b.getPosX() + b.getLength(); i++) { //update map
         map[i][b.getPosY()] = 0;
     }
@@ -245,11 +238,21 @@ void GroundManagement::checkIfOutOfBounds(int inputLength, int inputWidth, int p
 }
 
 Building& GroundManagement::findBuilding(int posX, int posY) {
-    int size = sizeof(buildingsList)/sizeof(buildingsList[0]);
-    for(int i = 0; i < size; i++) {
+    cout << buildingsList.size() << endl;
+    for(int i = 0; i < buildingsList.size(); i++) {
+        cout << buildingsList.size() << endl;
         if(buildingsList[i].getPosX() == posX && buildingsList[i].getPosY() == posY) {
             return buildingsList[i];
         }
     }
-    return buildingsList[0];//Fehlerfall behandeln
+    return buildingsList[0];//Fehlerfall muss noch behandelt werden
+}
+
+int GroundManagement::findIdx(Building &b) {
+    for(int i = 0; i < buildingsList.size(); i++) {
+        if(buildingsList[i].getPosX() == b.getPosX() && buildingsList[i].getPosY() == b.getPosY()) {
+            return i;
+        }
+    }
+    return 0; //Fehlerfall muss noch behandelt werden!
 }
