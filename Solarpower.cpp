@@ -6,7 +6,12 @@
 float Solarpower::basic_price = 3.3f;
 
 Solarpower::Solarpower(int _length, int _width, int _posX, int _posY) { 
-    Building(_length, _width, _posX, _posY); //initialisieren von length, width und price im Superkonstruktor 
+    //Building(_length, _width, _posX, _posY); //initialisieren von length, width und price im Superkonstruktor 
+    length = _length;
+    width = _width;
+    coord = new int[2];
+    coord[0] = _posX;
+    coord[1] = _posY;
     label = 3;
     matList = createMatList();
 }

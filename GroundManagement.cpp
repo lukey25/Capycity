@@ -24,7 +24,7 @@ using std::cin;
 using std::endl;
 using std::string;
 using std::stringstream;
-using std::vector;
+using std::vector; 
 
 
 int main(int argc, char** argv) {
@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
 GroundManagement::GroundManagement() {
     length = 0;
     width = 0;
-    buildingsList = vector<Building>(8); //Größe defaultmäßig festgelegt
+    buildingsList = vector<Building>(); //Größe defaultmäßig festgelegt
 }
 
 void GroundManagement::updateBuildingsList(Building &building) { //da braucht es vielleicht jetzt keine extra Funktion mehr
@@ -143,7 +143,7 @@ void GroundManagement::reduceMenu() {
     cin >> positionX;
     cout << "Bitte geben sie die y-Position des zu verkleinernden Gebaeudes ein, genau gesagt die y-Postition der linkeren oberen Ecke:" << endl;
     cin >> positionY;  
-    Building b = findBuilding(positionX, positionY); 
+    Building& b = findBuilding(positionX, positionY); 
     reduce(b);
     return;
 }
@@ -200,7 +200,7 @@ void GroundManagement::reduce(Building &b) { //nicht ganz Fehlerproof, für den 
         //cout << "Bitte pruefen Sie ihre Eingabe. Es muss die exakte Laenge sowie Breite des zu verkleinernden Gebaeudes angegeben werden" << endl;
         //return;
     //} //check if input area is smaller than the size of a given building
-    for(int i = b.getPosX(); i < b.getPosX() + b.getLength(); i++) {
+    for(int i = b.getPosX(); i < b.getPosX() + b.getLength(); i++) { //Prüfung hier nicht mehr notwendig, da sie schon beim durchgehen der BuildingList vorgenommen wird (also ob Gebäude tatsächlich existiert mit den gegebenen coords)
         for(int j = b.getPosY(); j < b.getPosY() + b.getWidth(); j++) {
             if(map[i][j] != b.getLabel()) {    //check if input area corresponds with a given building (same building type?, input area bigger than a given building size?)
                 cout << "Bitte pruefen sie ihre Eingabe. Gebaeudetyp stimmt nicht mit den anderen Eingaben ueberein oder die Koordinaten sind keinem Gebaeude zuzuordnen" << endl;
@@ -208,13 +208,6 @@ void GroundManagement::reduce(Building &b) { //nicht ganz Fehlerproof, für den 
             }
         }
     }
-    //delete Object when length && width reach 0
-    b.setLength(b.getLength() - 1); //update Object-attributes
-    b.setWidth(b.getWidth() - 1);
-    b.setPos(b.getPosX() + 1, b.getPosY() + 1);
-    if(b.getLength() <=0 && b.getWidth() <= 0) { 
-        buildingsList.erase(buildingsList.begin() + findIdx(b)); //löscht das Objekt aus der BuildingsList
-    } //(falls Länge und Breite = 0, wird es nicht mehr in der Liste gespeichert sondern gelöscht, wenn der Gültigkeitsbereich der Erstellung verlassen wird)
     for(int i = b.getPosX(); i < b.getPosX() + b.getLength(); i++) { //update map
         map[i][b.getPosY()] = 0;
     }
@@ -227,6 +220,14 @@ void GroundManagement::reduce(Building &b) { //nicht ganz Fehlerproof, für den 
     for(int i = b.getPosY(); i < b.getPosY() + b.getWidth(); i++) {
         map[b.getPosX() + b.getLength() - 1][i] = 0;
     }
+    b.setLength(b.getLength() - 2); //update Object-attributes
+    b.setWidth(b.getWidth() - 2);
+    b.setPos(b.getPosX() + 1, b.getPosY() + 1);
+    cout << buildingsList.size() << " " << buildingsList.capacity() << endl;
+    if(b.getLength() <=0 && b.getWidth() <= 0) {
+    buildingsList.erase(buildingsList.begin() + findIdx(b)); //löscht das Objekt aus der BuildingsList
+    } //(falls Länge und Breite = 0, wird es nicht mehr in der Liste gespeichert sondern gelöscht, wenn der Gültigkeitsbereich der Erstellung verlassen wird)
+    cout << buildingsList.size() << " " << buildingsList.capacity() << endl;
     cout << "Das Verkleinern war erfolgreich!" << endl;
 }
 
@@ -238,9 +239,7 @@ void GroundManagement::checkIfOutOfBounds(int inputLength, int inputWidth, int p
 }
 
 Building& GroundManagement::findBuilding(int posX, int posY) {
-    cout << buildingsList.size() << endl;
     for(int i = 0; i < buildingsList.size(); i++) {
-        cout << buildingsList.size() << endl;
         if(buildingsList[i].getPosX() == posX && buildingsList[i].getPosY() == posY) {
             return buildingsList[i];
         }

@@ -1,8 +1,25 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [],
-    "args": [20, 20]
+    "configurations": [
+
+        {
+            "name": "C/C++ Runner: Debug Session",
+            "type": "cppdbg",
+            "request": "launch",
+            "args": ["10", "10"],
+            "stopAtEntry": false,
+            "externalConsole": true,
+            "cwd": "c:/Users/lukas/OneDrive/Dokumente/GitHub/Capycity",
+            "program": "c:/Users/lukas/OneDrive/Dokumente/GitHub/Capycity/test.exe",
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
 }

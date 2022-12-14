@@ -32,11 +32,11 @@ void Building::setPos(int x, int y) {
 }
 
 int Building::getPosX() {
-    return coord[0];
+    return *coord;
 }
 
 int Building::getPosY() {
-    return coord[1];
+    return *(coord+1);
 }
 
 int Building::getLength() {
