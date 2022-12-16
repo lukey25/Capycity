@@ -27,6 +27,10 @@ using std::stringstream;
 using std::vector; 
 
 
+//Kopierkonstruktor + Zuweisungsoperator definieren bzw. damit auseinandersetzen
+
+
+
 int main(int argc, char** argv) {
     GroundManagement gm = GroundManagement(); //vielleicht noch umbenennen in CapycitySim //entweder Methoden der Klasse static machen oder ein Objekt davon erstellen, auf dem man operiert
     string len = string(argv[1]);
