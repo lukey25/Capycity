@@ -5,6 +5,7 @@ class Material { //bestenfalls abstract machen
 
     public:
         Material();
+        float getPrice();
         
 
 };

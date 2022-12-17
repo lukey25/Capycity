@@ -32,7 +32,7 @@ void Building::setPos(int x, int y) {
 }
 
 int Building::getPosX() {
-    return *coord;
+    return *coord; //bekomme hier Fehler, wenn ich das Array über den Superkonstruktor initialisiere und dann später über diese Funktion darauf zugreifen will
 }
 
 int Building::getPosY() {
@@ -48,5 +48,9 @@ int Building::getWidth() {
 }
 
 Building::~Building() { //Destruktor wird ja scheinbar nicht vererbt?
+
+}
+
+float Building::calcPrice() { //muss jede Subklasse selbst implementieren, da statische basic-price-variable.
 
 }

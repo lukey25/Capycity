@@ -7,5 +7,6 @@ class Metal : public Material {
         static float price;
     public:
         Metal(); 
+        static float getPrice();
 };
 #endif

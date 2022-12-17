@@ -7,5 +7,6 @@ class Plastic : public Material {
         static float price;
     public:
         Plastic();
+        static float getPrice();
 };
 #endif
