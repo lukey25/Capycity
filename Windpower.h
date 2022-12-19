@@ -9,5 +9,6 @@ class Windpower : public Building {
     public:
         Windpower(int _length, int _width, int _posX, int _posY);    
         Material* createMatList();
+        float calcPrice();
 };
 #endif

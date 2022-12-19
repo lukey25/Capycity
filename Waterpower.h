@@ -9,6 +9,7 @@ class Waterpower : public Building {
     public:
         Waterpower(int _length, int _width, int _posX, int _posY);
         Material* createMatList();
+        float calcPrice();
         //toString Methode
 };
 #endif

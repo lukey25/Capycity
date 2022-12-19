@@ -22,12 +22,13 @@ class Building {
         int getWidth();
         int getPosX();
         int getPosY();
+        float getPrice();
         Material* createMatList();
         Material* getMatList();
         void setLength(int _length);
         void setWidth(int _width);
         void setPos(int x, int y);
-        float calcPrice();
+        virtual float calcPrice();
 };
 
 #endif

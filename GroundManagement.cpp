@@ -160,6 +160,10 @@ void GroundManagement::bluePrint() {
         }
         cout << endl;
     }
+    for(int i = 0; i < buildingsList.size(); i++) {
+        Building& b = buildingsList[i];
+        cout << "Position: " << b.getPosX() << "," << b.getPosY() << " Type: " << b.getLabel() << " Price: " << b.getPrice() << endl;
+    }
     return;
 }
 

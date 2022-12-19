@@ -10,5 +10,6 @@ class Solarpower : public Building {
         Solarpower(int _length, int _width, int _posX, int _posY); 
         Solarpower() = default; 
         Material* createMatList();
+        float calcPrice();
 };
 #endif

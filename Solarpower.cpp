@@ -33,5 +33,6 @@ float Solarpower::calcPrice() { //muss ich hier jetzt Building oder Solarpower m
     for(int i = 0; i < matListLength; i++) {
         result += matList[i].getPrice();
     }
-    result += length * width * Solarpower:basic_price; //wieso kann ich auf basic_price nicht zugreifen?
+    result += length * width * basic_price; //wieso kann ich auf basic_price nicht zugreifen?
+    return result;
 }

@@ -51,6 +51,9 @@ Building::~Building() { //Destruktor wird ja scheinbar nicht vererbt?
 
 }
 
-float Building::calcPrice() { //muss jede Subklasse selbst implementieren, da statische basic-price-variable.
+//calcPrice //muss jede Subklasse selbst implementieren, da statische basic-price-variable.
 
+
+float Building::getPrice() {
+    return price;
 }

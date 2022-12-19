@@ -20,3 +20,13 @@ Material* Windpower::createMatList() { //warum die Funktioni über Building aufg
     matList[4] = Plastic();
     return matList;
 }
+
+float Windpower::calcPrice() { //muss ich hier jetzt Building oder Solarpower mit Bereichsoperator verwenden? Wenn ich die Funktion von Building überschreiben will
+    float result = 0.0f;
+    int matListLength = sizeof(matList)/sizeof(matList[0]);
+    for(int i = 0; i < matListLength; i++) {
+        result += matList[i].getPrice();
+    }
+    result += length * width * basic_price; //wieso kann ich auf basic_price nicht zugreifen?
+    return result;
+}
