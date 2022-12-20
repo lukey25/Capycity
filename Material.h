@@ -2,10 +2,11 @@
 #define MATERIAL
 
 class Material { //bestenfalls abstract machen
-
     public:
         Material();
-        float getPrice();
+
+    protected:
+        virtual float getPrice();
         
 
 };

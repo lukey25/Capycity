@@ -7,6 +7,6 @@ class Wood : public Material {
         static float price;
     public:
         Wood();
-        static float getPrice();
+        float getPrice();
 };
 #endif
