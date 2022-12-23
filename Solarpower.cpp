@@ -13,12 +13,12 @@ Solarpower::Solarpower(int _length, int _width, int _posX, int _posY) {
     coord[0] = _posX;
     coord[1] = _posY;
     label = 3;
+    matList = createMatList(); //weiß nicht, ob das so gut ist hier zwei Funktionen die voneinander abhängig sind nacheinander aufzurufen. Reihenfolge des Aufrufs entscheidend!
     price = calcPrice();
-    matList = createMatList();
 }
 
 Material* Solarpower::createMatList() { //warum die Funktioni über Building aufgerufen werden muss ist mir schleierhaft. Und ob es überhaupt Sinn macht, die zu vererben...
-    Material* matList = new Material[5];
+    Material* matList = new Material[5]; //sicherstellen, dass die Matlist wieder zerstört wird, da dynamischer Speicher (Destructor von Material im Destructor von Building aufrufen)
     matList[0] = Wood();
     matList[1] = Metal();
     matList[2] = Metal();

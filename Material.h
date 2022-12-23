@@ -3,10 +3,8 @@
 
 class Material { //bestenfalls abstract machen
     public:
-        Material();
-
-    protected:
-        virtual float getPrice();
+        Material() = default;
+        virtual float getPrice(){return 0.0f;};
         
 
 };

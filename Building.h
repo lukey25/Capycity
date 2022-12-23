@@ -28,7 +28,7 @@ class Building {
         void setLength(int _length);
         void setWidth(int _width);
         void setPos(int x, int y);
-        virtual float calcPrice();
+        virtual float calcPrice(){return 0.0f;};
 };
 
 #endif
