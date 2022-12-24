@@ -28,7 +28,8 @@ class Building {
         void setLength(int _length);
         void setWidth(int _width);
         void setPos(int x, int y);
-        virtual float calcPrice(){return 0.0f;};
+        void setPrice(float _price);
+        virtual float calcPrice()/*{return 5.0f;}*/; //Aufruf der Funktion für Building Objekt, ich will aber den Memberaufruf
 };
 
 #endif

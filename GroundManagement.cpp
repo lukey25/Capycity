@@ -92,7 +92,7 @@ void GroundManagement::mainMenu() {
             return;
         }
         else {
-            cout << endl << "Bitte ueberpruefen sie, ob ihre Eingabe mit einer der Eingabemoeglichkeiten (build, delete, blueprint, quit) uebereinstimmt" << endl;
+            cout << endl << "Bitte ueberpruefen sie, ob ihre Eingabe mit einer der Eingabemoeglichkeiten (build, reduce, blueprint, quit) uebereinstimmt" << endl;
         }
         cout << endl << endl;
     }
@@ -163,6 +163,7 @@ void GroundManagement::bluePrint() {
     for(int i = 0; i < buildingsList.size(); i++) {
         Building& b = buildingsList[i];
         cout << "Position: " << b.getPosX() << "," << b.getPosY() << " Type: " << b.getLabel() << " Price: " << b.getPrice() << endl;
+        //hier wäre vielleicht << Operatorüberladung für Building Objekte schöner  als Ausgabe.. Einfach über Buildingslist gehen und ferdich
     }
     return;
 }
@@ -233,8 +234,11 @@ void GroundManagement::reduce(Building &b) { //nicht ganz Fehlerproof, für den 
     b.setPos(b.getPosX() + 1, b.getPosY() + 1);
     cout << buildingsList.size() << " " << buildingsList.capacity() << endl;
     if(b.getLength() <=0 && b.getWidth() <= 0) {
-    buildingsList.erase(buildingsList.begin() + findIdx(b)); //löscht das Objekt aus der BuildingsList
+        buildingsList.erase(buildingsList.begin() + findIdx(b)); //löscht das Objekt aus der BuildingsList
     } //(falls Länge und Breite = 0, wird es nicht mehr in der Liste gespeichert sondern gelöscht, wenn der Gültigkeitsbereich der Erstellung verlassen wird)
+    else {
+        b.setPrice(b.calcPrice()); //Neukalkulierung des Preises nach dem reducen, falls das Objekt nicht schon zerstört wurde
+    }
     cout << buildingsList.size() << " " << buildingsList.capacity() << endl;
     cout << "Das Verkleinern war erfolgreich!" << endl;
 }

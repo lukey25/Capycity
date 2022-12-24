@@ -5,7 +5,7 @@
 
 float Solarpower::basic_price = 3.3f; //Jedes Gebäude desselben Typs hat denselben Grundpreis
 
-Solarpower::Solarpower(int _length, int _width, int _posX, int _posY) { 
+Solarpower::Solarpower(int _length, int _width, int _posX, int _posY) /*: length(_length)*/ { //wieso ist initialisieren mit Parameterliste hier nicht möglich?
     //Building(_length, _width, _posX, _posY); //initialisieren von length, width und price im Superkonstruktor 
     length = _length;                           //coord lässt sich komischerweise nicht im Superkonstruktor initialisieren bzw. gibt
     width = _width;                             //es Probleme bei späteren Zugriffen über das Memberobjekt
@@ -29,10 +29,11 @@ Material* Solarpower::createMatList() { //warum die Funktioni über Building auf
 
 float Solarpower::calcPrice() { //muss ich hier jetzt Building oder Solarpower mit Bereichsoperator verwenden? Wenn ich die Funktion von Building überschreiben will
     float result = 0.0f;
+    float matPrice = 0.0f;
     int matListLength = sizeof(matList)/sizeof(matList[0]);
     for(int i = 0; i < matListLength; i++) {
-        result += matList[i].getPrice();
+        matPrice += matList[i].getPrice();
     }
-    result += length * width * basic_price; //wieso kann ich auf basic_price nicht zugreifen?
+    result += length * width * (basic_price + matPrice); //wieso kann ich auf basic_price nicht zugreifen?
     return result;
 }

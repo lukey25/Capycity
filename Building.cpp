@@ -57,3 +57,7 @@ Building::~Building() { //Destruktor wird ja scheinbar nicht vererbt?
 float Building::getPrice() {
     return price;
 }
+
+void Building::setPrice(float _price) {
+    price = _price;
+}
