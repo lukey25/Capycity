@@ -29,7 +29,7 @@ class Building {
         void setWidth(int _width);
         void setPos(int x, int y);
         void setPrice(float _price);
-        virtual float calcPrice() {return 5.0f;}; //Aufruf der Funktion für Building Objekt, ich will aber den Memberaufruf
+        virtual float calcPrice() = 0; //Aufruf der Funktion für Building Objekt, ich will aber den Memberaufruf
 };
 
 #endif

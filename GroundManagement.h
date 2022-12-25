@@ -12,7 +12,7 @@ class GroundManagement {
         GroundManagement();
 
         int** createMap(int length, int width);
-        void updateBuildingsList(Building &building);
+        void updateBuildingsList(Building *building);
         //void createBuildingsList(Building* arr, Building &building);
         void mainMenu();
         void buildMenu();

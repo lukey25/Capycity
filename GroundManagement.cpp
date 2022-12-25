@@ -52,8 +52,8 @@ GroundManagement::GroundManagement() {
     buildingsList = vector<Building>(); //Größe defaultmäßig festgelegt
 }
 
-void GroundManagement::updateBuildingsList(Building &building) { //da braucht es vielleicht jetzt keine extra Funktion mehr
-    buildingsList.push_back(building);
+void GroundManagement::updateBuildingsList(Building *building) { //da braucht es vielleicht jetzt keine extra Funktion mehr
+    buildingsList.push_back(*building);
 }
 
 
@@ -181,23 +181,23 @@ bool GroundManagement::checkGround(int buildingLength, int buildingWidth, int po
 }
 
 void GroundManagement::build(int label, int buildingLength, int buildingWidth, int positionX, int positionY) {
-    Building b;
+    Building *b;
     switch(label) {
         case 1:
-            b = Waterpower(buildingLength, buildingWidth, positionX, positionY);
+            b = new Waterpower(buildingLength, buildingWidth, positionX, positionY);
             break;
         case 2:
-            b = Windpower(buildingLength, buildingWidth, positionX, positionY);
+            b = new Windpower(buildingLength, buildingWidth, positionX, positionY);
             break;
         case 3:
-            b = Solarpower(buildingLength, buildingWidth, positionX, positionY);
+            b = new Solarpower(buildingLength, buildingWidth, positionX, positionY);
         default:
             ;
     }
     updateBuildingsList(b);
     for(int i = positionX; i < positionX + buildingLength; i++) {   //update map
         for(int j = positionY; j < positionY + buildingWidth; j++) {
-            map[i][j] = b.getLabel();
+            map[i][j] = b->getLabel();
         }
     }
     cout << "Der Bau wurde erfolgreich abgeschlossen!" << endl;
