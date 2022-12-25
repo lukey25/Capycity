@@ -6,7 +6,7 @@ class GroundManagement {
     public:
         int length;
         int width;
-        vector<Building> buildingsList; //Liste der bestehenden Gebäude
+        vector<Building*> buildingsList; //Liste der bestehenden Gebäude
         int** map; //2-dimensionales Array für den blueprint zur Ausgabe
 
         GroundManagement();
@@ -21,7 +21,7 @@ class GroundManagement {
         bool checkGround(int length, int width, int positionX, int positionY);
         void checkIfOutOfBounds(int inputLength, int inputWidth, int posX, int posY);
         void build(int label, int buildingLength, int buildingWidth, int positionX, int positionY);
-        void reduce(Building &b);
-        Building& findBuilding(int posX, int posY);
-        int findIdx(Building &b);
+        void reduce(Building *b);
+        Building* findBuilding(int posX, int posY);
+        int findIdx(Building *b);
 };
