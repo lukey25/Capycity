@@ -1,6 +1,10 @@
 #ifndef BUILDING
 #define BUILDING
 #include "Material.h"
+#include <iostream>
+#include <map>
+
+using std::map;
 
 class Building {
     protected:
@@ -9,7 +13,8 @@ class Building {
         int width;
         int length;
         int* coord;
-        Material* matList;
+        map<Material, int> matList;
+        //Material* matList;
         //Material* createMatList(int wood, int metal, int plastic);
 
     public:
@@ -23,8 +28,8 @@ class Building {
         int getPosX();
         int getPosY();
         float getPrice();
-        Material* createMatList();
-        Material* getMatList();
+        map<Material, int> createMatList();
+        map<Material, int> getMatList();
         void setLength(int _length);
         void setWidth(int _width);
         void setPos(int x, int y);

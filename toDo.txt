@@ -1,0 +1,16 @@
+To Do:
+
+- To String Methoden
+- Kunstruktoraufrufe Wind/Water mit Buildingaufruf und Parameterliste
+- Material createMatList abstract machen
+- Empty Klasse löschen
+- const machen, was const sinnvoll ist
+- Destruktoren
+
+- calc Price evtl. nur in Building implementieren mit Parameter, der basic_price übergibt und dann nur Aufruf in den Memberklassen mit der Preisübergabe. Weiß nicht ob das mehr Sinn macht oder nicht
+
+
+Obacht:
+- Funktionen sollten keine Referenz auf in dem Funktionsblock erstellte lokale Variablen zurückliefern, da diese nach Aufruf der Funktion nicht mehr existieren#
+- Wenn in Funktion dynamischer Speicher angelegt und Zeiger zurückgegeben, muss die Speicherverwaltung an anderer Stelle erfolgen (delete)
+- 

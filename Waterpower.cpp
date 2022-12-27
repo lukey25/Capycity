@@ -16,22 +16,22 @@ Waterpower::Waterpower(int _length, int _width, int _posX, int _posY) {
     price = calcPrice(); //benötigte Materialien pro Feld
 }
 
-Material* Waterpower::createMatList() { //warum die Funktioni über Building aufgerufen werden muss ist mir schleierhaft. Und ob es überhaupt Sinn macht, die zu vererben...
-    Material* matList = new Material[5];
-    matList[0] = Wood();
-    matList[1] = Wood();
-    matList[2] = Metal();
-    matList[3] = Metal();
-    matList[4] = Plastic();
+map<Material, int> Waterpower::createMatList() { //warum die Funktioni über Building aufgerufen werden muss ist mir schleierhaft. Und ob es überhaupt Sinn macht, die zu vererben...
+    matList = map<Material, int>(); //sicherstellen, dass die Matlist wieder zerstört wird, da dynamischer Speicher (Destructor von Material im Destructor von Building aufrufen)
+    matList.insert(pair<Material, int>(Wood(), 3));
+    matList.insert(pair<Material, int>(Metal(), 5));
+    matList.insert(pair<Material, int>(Plastic(), 2));
     return matList;
 }
 
 float Waterpower::calcPrice() { //muss ich hier jetzt Building oder Solarpower mit Bereichsoperator verwenden? Wenn ich die Funktion von Building überschreiben will
-    float result = 0.0f;
+    float result = 0.0f; //Methode sollte bestenfalls vererbt werden um Redundanz zu vermeiden, jedoch schwierig wenn statische Variablen der Memberklasse verwendet werden
     float matPrice = 0.0f;
-    int matListLength = sizeof(matList)/sizeof(matList[0]);
-    for(int i = 0; i < matListLength; i++) {
-        matPrice += matList[i].getPrice();
+    int matListLength = matList.size(); // Zeile redundant
+    map<Material, int>::iterator it;
+    for(it = matList.begin(); it != matList.end(); it++) {
+        Material temp = it->first; //Kopierkonstruktor Aufruf? -> implementieren?
+        matPrice += temp.getPrice() * it->second;
     }
     result += length * width * (basic_price + matPrice); //wieso kann ich auf basic_price nicht zugreifen?
     return result;

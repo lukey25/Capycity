@@ -9,7 +9,7 @@ class Solarpower : public Building {
     public:
         Solarpower(int _length, int _width, int _posX, int _posY); 
         Solarpower() = default; 
-        Material* createMatList();
+        map<Material, int> createMatList();
         float calcPrice();
 };
 #endif
