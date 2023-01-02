@@ -232,21 +232,19 @@ void GroundManagement::reduce(Building *b) { //nicht ganz Fehlerproof, für den 
     b->setLength(b->getLength() - 2); //update Object-attributes
     b->setWidth(b->getWidth() - 2);
     b->setPos(b->getPosX() + 1, b->getPosY() + 1);
-    cout << buildingsList.size() << " " << buildingsList.capacity() << endl;
-    if(b->getLength() <=0 && b->getWidth() <= 0) {
+    if(b->getLength() <=0 || b->getWidth() <= 0) {
         buildingsList.erase(buildingsList.begin() + findIdx(b)); //löscht das Objekt aus der BuildingsList
     } //(falls Länge und Breite = 0, wird es nicht mehr in der Liste gespeichert sondern gelöscht, wenn der Gültigkeitsbereich der Erstellung verlassen wird)
     else {
         b->setPrice(b->calcPrice()); //Neukalkulierung des Preises nach dem reducen, falls das Objekt nicht schon zerstört wurde
     }
-    cout << buildingsList.size() << " " << buildingsList.capacity() << endl;
     cout << "Das Verkleinern war erfolgreich!" << endl;
 }
 
 void GroundManagement::checkIfOutOfBounds(int inputLength, int inputWidth, int posX, int posY) {
     if(inputLength + posX > length || inputWidth + posY > width) {
         cout << "Bitte ueberpruefen Sie ihre Eingabe. Die Eingaben duerfen nicht ueber die Baugrundgrenze hinaus gehen!" << endl;
-        mainMenu();
+        mainMenu(); //das ist schlecht, sollte ich am besten rausmachen oder anders lösen...
     }
 }
 

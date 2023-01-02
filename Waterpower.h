@@ -8,7 +8,7 @@ class Waterpower : public Building {
         static float basic_price;
     public:
         Waterpower(int _length, int _width, int _posX, int _posY);
-        map<Material, int> createMatList();
+        map<Material*, int> createMatList();
         float calcPrice();
         //toString Methode
 };

@@ -13,7 +13,7 @@ class Building {
         int width;
         int length;
         int* coord;
-        map<Material, int> matList;
+        map<Material*, int> matList;
         //Material* matList;
         //Material* createMatList(int wood, int metal, int plastic);
 
@@ -28,8 +28,8 @@ class Building {
         int getPosX();
         int getPosY();
         float getPrice();
-        map<Material, int> createMatList();
-        map<Material, int> getMatList();
+        virtual map<Material*, int> createMatList() = 0;
+        map<Material*, int> getMatList();
         void setLength(int _length);
         void setWidth(int _width);
         void setPos(int x, int y);

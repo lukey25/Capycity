@@ -62,7 +62,7 @@ void Building::setPrice(float _price) {
     price = _price;
 }
 
-map<Material, int> getMatList() {
+map<Material*, int> Building::getMatList() {
     return matList; //wenn ich sie nicht im Header initialisiere, existiert sie in Building nicht
     //mal schauen, ob initialisieren in MemberKonstruktor sinnvoll ist oder ob man das auch außerhalb machen kann und dann nur zuweisen im Konstrukor bzw. füllen
 }
