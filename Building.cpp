@@ -73,6 +73,12 @@ map<Material*, int> Building::getMatList() {
 
 ostream& operator<<(ostream& os, Building& b)
 {
-    os << "Position: " << b.getPosX() << "," << b.getPosY() << " Type: " << b.getLabel() << "(" << b.getType() << ")" << " Price: " << b.getPrice() << endl;
+    os << "Position: " << b.getPosX() << "," << b.getPosY() << " Type: " << b.getLabel() << "(" << b.getType() << ")" << "Materials: " << printMap(b) << " Price: " << b.getPrice() << endl;
     return os;
+}
+
+string printMap(Building& b) { //Stringbuffer
+    for (auto const &pair: b.getMatList()) {
+        std::cout << "{" << pair.first << ": " << pair.second << "}\n";
+    }
 }

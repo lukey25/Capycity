@@ -39,6 +39,7 @@ class Building {
         void setPrice(float _price);
         virtual float calcPrice() = 0; //Aufruf der Funktion für Building Objekt, ich will aber den Memberaufruf
         friend ostream& operator<<(ostream& os, const Building& b);
+        string printMap(Building &b);
 };
 
 #endif

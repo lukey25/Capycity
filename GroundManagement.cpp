@@ -4,6 +4,7 @@
 #include <vector>
 #include "GroundManagement.h"
 #include "Solarpower.h"
+#include "Building.cpp"
 #include "Solarpower.cpp"
 #include "Windpower.h"
 #include "Windpower.cpp"
