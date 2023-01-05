@@ -10,12 +10,9 @@ using std::map;
 
 float Solarpower::basic_price = 3.3f; //Jedes Gebäude desselben Typs hat denselben Grundpreis
 
-Solarpower::Solarpower(int _length, int _width, int _posX, int _posY) : Building(_length, _width, _posX, _posY) { //wieso ist initialisieren mit Parameterliste hier nicht möglich?
-    //Building(_length, _width, _posX, _posY); //initialisieren von length, width und price im Superkonstruktor                             //es Probleme bei späteren Zugriffen über das Memberobjekt
-    //coord = new int[2];
-    //coord[0] = _posX;
-    //coord[1] = _posY;
+Solarpower::Solarpower(int _length, int _width, int _posX, int _posY) : Building(_length, _width, _posX, _posY) { 
     label = 3;
+    type = "Solarpower";
     matList = createMatList(); //weiß nicht, ob das so gut ist hier zwei Funktionen die voneinander abhängig sind nacheinander aufzurufen. Reihenfolge des Aufrufs entscheidend!
     price = calcPrice();
 }
@@ -31,7 +28,6 @@ map<Material*, int> Solarpower::createMatList() { //warum die Funktioni über Bu
 float Solarpower::calcPrice() { //muss ich hier jetzt Building oder Solarpower mit Bereichsoperator verwenden? Wenn ich die Funktion von Building überschreiben will
     float result = 0.0f; //Methode sollte bestenfalls vererbt werden um Redundanz zu vermeiden, jedoch schwierig wenn statische Variablen der Memberklasse verwendet werden
     float matPrice = 0.0f;
-    int matListLength = matList.size(); // Zeile redundant
     map<Material*, int>::iterator it; //nicht unbedingt notwendig, kann man auch mit auto direkt in der loop definieren + initialisieren
     for(it = matList.begin(); it != matList.end(); it++) {
         Material* temp = it->first; //Kopierkonstruktor Aufruf? -> implementieren?

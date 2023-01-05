@@ -18,6 +18,10 @@ int Building::getLabel() {
     return label;
 }
 
+string Building::getType() {
+    return type;
+}
+
 void Building::setLength(int _length) {
     length = _length;
 }
@@ -65,4 +69,10 @@ void Building::setPrice(float _price) {
 map<Material*, int> Building::getMatList() {
     return matList; //wenn ich sie nicht im Header initialisiere, existiert sie in Building nicht
     //mal schauen, ob initialisieren in MemberKonstruktor sinnvoll ist oder ob man das auch außerhalb machen kann und dann nur zuweisen im Konstrukor bzw. füllen
+}
+
+ostream& operator<<(ostream& os, Building& b)
+{
+    os << "Position: " << b.getPosX() << "," << b.getPosY() << " Type: " << b.getLabel() << "(" << b.getType() << ")" << " Price: " << b.getPrice() << endl;
+    return os;
 }

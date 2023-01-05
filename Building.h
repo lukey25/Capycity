@@ -5,11 +5,13 @@
 #include <map>
 
 using std::map;
+using namespace std;
 
 class Building {
     protected:
         float price;
         int label;
+        string type;
         int width;
         int length;
         int* coord;
@@ -23,6 +25,7 @@ class Building {
         Building() = default;
         ~Building();
         int getLabel();
+        string getType();
         int getLength();
         int getWidth();
         int getPosX();
@@ -35,6 +38,7 @@ class Building {
         void setPos(int x, int y);
         void setPrice(float _price);
         virtual float calcPrice() = 0; //Aufruf der Funktion für Building Objekt, ich will aber den Memberaufruf
+        friend ostream& operator<<(ostream& os, const Building& b);
 };
 
 #endif

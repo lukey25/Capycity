@@ -5,13 +5,9 @@
 
 float Windpower::basic_price = 3.3f;
 
-Windpower::Windpower(int _length, int _width, int _posX, int _posY) { 
-    length = _length;                           //coord lässt sich komischerweise nicht im Superkonstruktor initialisieren bzw. gibt
-    width = _width;                             //es Probleme bei späteren Zugriffen über das Memberobjekt
-    coord = new int[2];
-    coord[0] = _posX;
-    coord[1] = _posY;
-    label = 2;
+Windpower::Windpower(int _length, int _width, int _posX, int _posY) : Building(_length, _width, _posX, _posY) { 
+    label = 1;
+    type = "Windpower";
     matList = createMatList(); //weiß nicht, ob das so gut ist hier zwei Funktionen die voneinander abhängig sind nacheinander aufzurufen. Reihenfolge des Aufrufs entscheidend!
     price = calcPrice(); 
 }

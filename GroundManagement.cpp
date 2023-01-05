@@ -3,7 +3,6 @@
 #include <cmath>
 #include <vector>
 #include "GroundManagement.h"
-#include "Empty.h"
 #include "Solarpower.h"
 #include "Solarpower.cpp"
 #include "Windpower.h"
@@ -102,7 +101,7 @@ void GroundManagement::buildMenu() {
     string input;
     int positionX;
     int positionY;
-    int buildingLength;
+    int buildingLength; //unsigned ints?
     int buildingWidth;
     int label;
     cout << "Bitte geben sie folgende Informationen in die Konsole ein:" << endl;
@@ -123,9 +122,12 @@ void GroundManagement::buildMenu() {
     }
     cout << "2. Laenge des Gebaeudes" << endl;
     cin >> buildingLength;
-    //vielleicht hier irgendwo auch den aktuellen Bauplan mal anzeigen, ganz am Anfang des buildMenu Aufrufs
     cout << "3. Breite des Gebaeudes" << endl;
     cin >> buildingWidth;
+    if(buildingLength < 1 || buildingWidth < 1) {
+        cout << "Laenge bzw. Breite muss groesser als 0 sein!" << endl;
+        return;
+    }
     cout << "4. x-Position, an dem das Gebaeude gebaut werden soll. Genau gesagt die x-Postition der linkeren oberen Ecke" << endl;
     cin >> positionX;
     cout << "5. y-Position, an dem das Gebaeude gebaut werden soll. Genau gesagt die y-Postition der linkeren oberen Ecke" << endl;
@@ -152,7 +154,7 @@ void GroundManagement::reduceMenu() {
     return;
 }
 
-void GroundManagement::bluePrint() {
+void GroundManagement::bluePrint() { //seperate print out function for the blueprint
     cout << endl << endl;
     for(int i = 0; i < width; i++) { 
         for(int j = 0; j < length; j++) {
@@ -160,10 +162,8 @@ void GroundManagement::bluePrint() {
         }
         cout << endl;
     }
-    for(int i = 0; i < buildingsList.size(); i++) {
-        Building *b = buildingsList[i];
-        cout << "Position: " << b->getPosX() << "," << b->getPosY() << " Type: " << b->getLabel() << " Price: " << b->getPrice() << endl;
-        //hier wäre vielleicht << Operatorüberladung für Building Objekte schöner  als Ausgabe.. Einfach über Buildingslist gehen und ferdich
+    for(int i = 0; i < buildingsList.size(); i++) { //print out all Buildings with certain information.
+        cout << *buildingsList[i]; //<< Operator overloading in class Building
     }
     return;
 }
