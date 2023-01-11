@@ -5,6 +5,7 @@ To Do:
 - Destruktoren
 - Check if out of bounds funktion löschen oder andere Möglichkeit verwenden. Main Aufruf ist scheiße
 - Option die Materialliste anzupassen
+- Funktion für updateMap()
 
 - calc Price evtl. nur in Building implementieren mit Parameter, der basic_price übergibt und dann nur Aufruf in den Memberklassen mit der Preisübergabe. Weiß nicht ob das mehr Sinn macht oder nicht
 

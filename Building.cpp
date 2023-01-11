@@ -1,4 +1,7 @@
 #include "Building.h"
+#include <sstream>
+
+using std::stringstream;
 
 Building::Building(int _length, int _width, int _posX, int _posY) : length(_length), width(_width) {
     coord = new int[2];
@@ -71,14 +74,27 @@ map<Material*, int> Building::getMatList() {
     //mal schauen, ob initialisieren in MemberKonstruktor sinnvoll ist oder ob man das auch außerhalb machen kann und dann nur zuweisen im Konstrukor bzw. füllen
 }
 
+string printMap(Building& b, string str) { //Stringbuffer benötigt
+    stringstream ss;
+    int counter = 0;
+    string temp;
+    for (int i = 1; i < str.length(); i++) {temp += " ";};
+    for (auto &pair: b.getMatList()) {
+        string s = counter > 0 ? temp : "";
+        ss << s <<"{" << (pair.first)->getName() << ": " << pair.second << "}\n";
+        counter++;
+    }
+    string s = ss.str();
+    return s;
+}
+
 ostream& operator<<(ostream& os, Building& b)
 {
-    os << "Position: " << b.getPosX() << "," << b.getPosY() << " Type: " << b.getLabel() << "(" << b.getType() << ")" << "Materials: " << printMap(b) << " Price: " << b.getPrice() << endl;
+    stringstream ss;
+    ss << "Position: " << b.getPosX() << "," << b.getPosY() << " Type: " << b.getLabel() << "(" << b.getType() << ")" << " Price: " << b.getPrice() << " Materials: " << endl;
+    string s = ss.str();
+    os << "Position: " << b.getPosX() << "," << b.getPosY() << " Type: " << b.getLabel() << "(" << b.getType() << ")" << " Price: " << b.getPrice() << " Materials: " << printMap(b, s) << endl;
     return os;
 }
 
-string printMap(Building& b) { //Stringbuffer
-    for (auto const &pair: b.getMatList()) {
-        std::cout << "{" << pair.first << ": " << pair.second << "}\n";
-    }
-}
+

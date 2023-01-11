@@ -156,6 +156,7 @@ void GroundManagement::reduceMenu() {
 }
 
 void GroundManagement::bluePrint() { //seperate print out function for the blueprint
+    float sum = 0;
     cout << endl << endl;
     for(int i = 0; i < width; i++) { 
         for(int j = 0; j < length; j++) {
@@ -164,8 +165,10 @@ void GroundManagement::bluePrint() { //seperate print out function for the bluep
         cout << endl;
     }
     for(int i = 0; i < buildingsList.size(); i++) { //print out all Buildings with certain information.
+        sum += buildingsList[i]->getPrice();
         cout << *buildingsList[i]; //<< Operator overloading in class Building
     }
+    cout << "Gesamtpreis aller Gebaeude: " << sum << endl;
     return;
 }
 
@@ -184,10 +187,10 @@ bool GroundManagement::checkGround(int buildingLength, int buildingWidth, int po
 void GroundManagement::build(int label, int buildingLength, int buildingWidth, int positionX, int positionY) {
     Building *b;
     switch(label) {
-        case 1:
+        case 2:
             b = new Waterpower(buildingLength, buildingWidth, positionX, positionY);
             break;
-        case 2:
+        case 1:
             b = new Windpower(buildingLength, buildingWidth, positionX, positionY);
             break;
         case 3:
