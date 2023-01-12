@@ -9,6 +9,9 @@ using namespace std;
 
 class Building {
     protected:
+        int woodPerUnit;
+        int plasticPerUnit;
+        int metalPerUnit;
         float price;
         int label;
         string type;
@@ -16,6 +19,7 @@ class Building {
         int length;
         int* coord;
         map<Material*, int> matList;
+
         //Material* matList;
         //Material* createMatList(int wood, int metal, int plastic);
 

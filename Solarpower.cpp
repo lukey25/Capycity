@@ -11,6 +11,9 @@ using std::map;
 float Solarpower::basic_price = 3.3f; //Jedes Gebäude desselben Typs hat denselben Grundpreis
 
 Solarpower::Solarpower(int _length, int _width, int _posX, int _posY) : Building(_length, _width, _posX, _posY) { 
+    woodPerUnit = 3;
+    metalPerUnit = 3;
+    plasticPerUnit = 1;
     label = 3;
     type = "Solarpower";
     matList = createMatList(); //weiß nicht, ob das so gut ist hier zwei Funktionen die voneinander abhängig sind nacheinander aufzurufen. Reihenfolge des Aufrufs entscheidend!
@@ -19,9 +22,9 @@ Solarpower::Solarpower(int _length, int _width, int _posX, int _posY) : Building
 
 map<Material*, int> Solarpower::createMatList() { //warum die Funktioni über Building aufgerufen werden muss ist mir schleierhaft. Und ob es überhaupt Sinn macht, die zu vererben...
     matList = map<Material*, int>(); //sicherstellen, dass die Matlist wieder zerstört wird, da dynamischer Speicher (Destructor von Material im Destructor von Building aufrufen)
-    matList.insert({new Wood(), 3});
-    matList.insert(pair<Material*, int>(new Metal(), 3));
-    matList.insert(pair<Material*, int>(new Plastic(), 1));
+    matList.insert({new Wood(), woodPerUnit * length * width});
+    matList.insert(pair<Material*, int>(new Metal(), metalPerUnit * length * width));
+    matList.insert(pair<Material*, int>(new Plastic(), plasticPerUnit * length * width));
     return matList;
 }
 
