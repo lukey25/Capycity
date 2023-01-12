@@ -84,8 +84,7 @@ string printMap(Building& b, string str) { //Stringbuffer benötigt
         ss << s <<"{" << (pair.first)->getName() << ": " << pair.second << "}\n";
         counter++;
     }
-    string s = ss.str();
-    return s;
+    return ss.str();
 }
 
 ostream& operator<<(ostream& os, Building& b)
