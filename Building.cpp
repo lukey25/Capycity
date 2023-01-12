@@ -96,4 +96,12 @@ ostream& operator<<(ostream& os, Building& b)
     return os;
 }
 
+map<Material*, int> Solarpower::createMatList() { //warum die Funktioni über Building aufgerufen werden muss ist mir schleierhaft. Und ob es überhaupt Sinn macht, die zu vererben...
+    matList = map<Material*, int>(); //sicherstellen, dass die Matlist wieder zerstört wird, da dynamischer Speicher (Destructor von Material im Destructor von Building aufrufen)
+    matList.insert({new Wood(), woodPerUnit * length * width});
+    matList.insert(pair<Material*, int>(new Metal(), metalPerUnit * length * width));
+    matList.insert(pair<Material*, int>(new Plastic(), plasticPerUnit * length * width));
+    return matList;
+}
+
 

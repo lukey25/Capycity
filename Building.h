@@ -35,7 +35,7 @@ class Building {
         int getPosX();
         int getPosY();
         float getPrice();
-        virtual map<Material*, int> createMatList() = 0;
+        virtual map<Material*, int> createMatList();
         map<Material*, int> getMatList();
         void setLength(int _length);
         void setWidth(int _width);

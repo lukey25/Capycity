@@ -20,13 +20,13 @@ Solarpower::Solarpower(int _length, int _width, int _posX, int _posY) : Building
     price = calcPrice();
 }
 
-map<Material*, int> Solarpower::createMatList() { //warum die Funktioni über Building aufgerufen werden muss ist mir schleierhaft. Und ob es überhaupt Sinn macht, die zu vererben...
+/* map<Material*, int> Solarpower::createMatList() { //warum die Funktioni über Building aufgerufen werden muss ist mir schleierhaft. Und ob es überhaupt Sinn macht, die zu vererben...
     matList = map<Material*, int>(); //sicherstellen, dass die Matlist wieder zerstört wird, da dynamischer Speicher (Destructor von Material im Destructor von Building aufrufen)
     matList.insert({new Wood(), woodPerUnit * length * width});
     matList.insert(pair<Material*, int>(new Metal(), metalPerUnit * length * width));
     matList.insert(pair<Material*, int>(new Plastic(), plasticPerUnit * length * width));
     return matList;
-}
+} */
 
 float Solarpower::calcPrice() { //muss ich hier jetzt Building oder Solarpower mit Bereichsoperator verwenden? Wenn ich die Funktion von Building überschreiben will
     float result = 0.0f; //Methode sollte bestenfalls vererbt werden um Redundanz zu vermeiden, jedoch schwierig wenn statische Variablen der Memberklasse verwendet werden
