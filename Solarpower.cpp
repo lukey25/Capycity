@@ -28,7 +28,7 @@ Solarpower::Solarpower(int _length, int _width, int _posX, int _posY) : Building
     return matList;
 } */
 
-float Solarpower::calcPrice() { //muss ich hier jetzt Building oder Solarpower mit Bereichsoperator verwenden? Wenn ich die Funktion von Building überschreiben will
+/* float Solarpower::calcPrice() { //muss ich hier jetzt Building oder Solarpower mit Bereichsoperator verwenden? Wenn ich die Funktion von Building überschreiben will
     float result = 0.0f; //Methode sollte bestenfalls vererbt werden um Redundanz zu vermeiden, jedoch schwierig wenn statische Variablen der Memberklasse verwendet werden
     float matPrice = 0.0f;
     map<Material*, int>::iterator it; //nicht unbedingt notwendig, kann man auch mit auto direkt in der loop definieren + initialisieren
@@ -38,4 +38,4 @@ float Solarpower::calcPrice() { //muss ich hier jetzt Building oder Solarpower m
     }
     result += length * width * (basic_price + matPrice); //wieso kann ich auf basic_price nicht zugreifen?
     return result;
-}
+} */
