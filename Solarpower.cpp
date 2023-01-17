@@ -8,16 +8,17 @@ using std::pair;
 using std::map;
 
 
-float Solarpower::basic_price = 3.3f; //Jedes Gebäude desselben Typs hat denselben Grundpreis
+ //Jedes Gebäude desselben Typs hat denselben Grundpreis
 
 Solarpower::Solarpower(int _length, int _width, int _posX, int _posY) : Building(_length, _width, _posX, _posY) { 
+    basicPrice = 3.3f;
     woodPerUnit = 3;
     metalPerUnit = 3;
     plasticPerUnit = 1;
     label = 3;
     type = "Solarpower";
     matList = createMatList(); //weiß nicht, ob das so gut ist hier zwei Funktionen die voneinander abhängig sind nacheinander aufzurufen. Reihenfolge des Aufrufs entscheidend!
-    price = calcPrice();
+    totalPrice = calcPrice();
 }
 
 /* map<Material*, int> Solarpower::createMatList() { //warum die Funktioni über Building aufgerufen werden muss ist mir schleierhaft. Und ob es überhaupt Sinn macht, die zu vererben...

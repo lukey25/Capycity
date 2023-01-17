@@ -12,7 +12,8 @@ class Building {
         int woodPerUnit;
         int plasticPerUnit;
         int metalPerUnit;
-        float price;
+        float totalPrice;
+        float basicPrice;
         int label;
         string type;
         int width;
@@ -34,14 +35,15 @@ class Building {
         int getWidth();
         int getPosX();
         int getPosY();
-        float getPrice();
+        float getTotalPrice();
         virtual map<Material*, int> createMatList();
         map<Material*, int> getMatList();
         void setLength(int _length);
         void setWidth(int _width);
         void setPos(int x, int y);
-        void setPrice(float _price);
-        virtual float calcPrice() = 0; //Aufruf der Funktion für Building Objekt, ich will aber den Memberaufruf
+        void setBasicPrice(float _price);
+        void setTotalPrice(float _price);
+        virtual float calcPrice(); //Aufruf der Funktion für Building Objekt, ich will aber den Memberaufruf
         friend ostream& operator<<(ostream& os, const Building& b);
         string printMap(Building &b, string s);
 };

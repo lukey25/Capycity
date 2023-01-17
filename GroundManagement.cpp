@@ -151,6 +151,10 @@ void GroundManagement::reduceMenu() {
     cout << "Bitte geben sie die y-Position des zu verkleinernden Gebaeudes ein, genau gesagt die y-Postition der linkeren oberen Ecke:" << endl;
     cin >> positionY;  
     Building* b = findBuilding(positionX, positionY); 
+    if(b == nullptr) {
+        cout << "Bitte pruefen sie ihre Eingabe. Die eigegebenen Koordinaten muessen mit einem bestehenden Gebaeude uebereinstimmen." << endl;
+        return;    
+    }
     reduce(b);
     return;
 }
@@ -165,7 +169,7 @@ void GroundManagement::bluePrint() { //seperate print out function for the bluep
         cout << endl;
     }
     for(int i = 0; i < buildingsList.size(); i++) { //print out all Buildings with certain information.
-        sum += buildingsList[i]->getPrice();
+        sum += buildingsList[i]->getTotalPrice();
         cout << *buildingsList[i]; //<< Operator overloading in class Building
     }
     cout << "Gesamtpreis aller Gebaeude: " << sum << endl;
@@ -209,18 +213,7 @@ void GroundManagement::build(int label, int buildingLength, int buildingWidth, i
 
 void GroundManagement::reduce(Building *b) { //nicht ganz Fehlerproof, für den Fall das Gebäude gleicher Art direkt aneinander stehen
     //checkIfOutOfBounds(buildingLength, buildingWidth, positionX, positionY);
-    //if(map[positionX + buildingLength][positionY] == type || map[positionX][positionY + buildingWidth] == type) {
-        //cout << "Bitte pruefen Sie ihre Eingabe. Es muss die exakte Laenge sowie Breite des zu verkleinernden Gebaeudes angegeben werden" << endl;
-        //return;
-    //} //check if input area is smaller than the size of a given building
-    for(int i = b->getPosX(); i < b->getPosX() + b->getLength(); i++) { //Prüfung hier nicht mehr notwendig, da sie schon beim durchgehen der BuildingList vorgenommen wird (also ob Gebäude tatsächlich existiert mit den gegebenen coords)
-        for(int j = b->getPosY(); j < b->getPosY() + b->getWidth(); j++) {
-            if(map[i][j] != b->getLabel()) {    //check if input area corresponds with a given building (same building type?, input area bigger than a given building size?)
-                cout << "Bitte pruefen sie ihre Eingabe. Gebaeudetyp stimmt nicht mit den anderen Eingaben ueberein oder die Koordinaten sind keinem Gebaeude zuzuordnen" << endl;
-                return;
-            }
-        }
-    }
+
     for(int i = b->getPosX(); i < b->getPosX() + b->getLength(); i++) { //update map
         map[i][b->getPosY()] = 0;
     }
@@ -240,7 +233,7 @@ void GroundManagement::reduce(Building *b) { //nicht ganz Fehlerproof, für den 
         buildingsList.erase(buildingsList.begin() + findIdx(b)); //löscht das Objekt aus der BuildingsList
     } //(falls Länge und Breite = 0, wird es nicht mehr in der Liste gespeichert sondern gelöscht, wenn der Gültigkeitsbereich der Erstellung verlassen wird)
     else {
-        b->setPrice(b->calcPrice()); //Neukalkulierung des Preises nach dem reducen, falls das Objekt nicht schon zerstört wurde
+        b->setTotalPrice(b->calcPrice()); //Neukalkulierung des Preises nach dem reducen, falls das Objekt nicht schon zerstört wurde
     }
     cout << "Das Verkleinern war erfolgreich!" << endl;
 }
@@ -258,7 +251,7 @@ Building* GroundManagement::findBuilding(int posX, int posY) {
             return buildingsList[i];
         }
     }
-    return buildingsList[0];//Fehlerfall muss noch behandelt werden
+    return nullptr;//Fehlerfall muss noch behandelt werden
 }
 
 int GroundManagement::findIdx(Building *b) {
