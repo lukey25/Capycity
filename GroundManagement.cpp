@@ -3,7 +3,6 @@
 #include <cmath>
 #include <vector>
 #include "GroundManagement.h"
-#include "Empty.h"
 #include "Solarpower.h"
 #include "Solarpower.cpp"
 #include "Windpower.h"
@@ -27,12 +26,10 @@ using std::stringstream;
 using std::vector; 
 
 
-//Kopierkonstruktor + Zuweisungsoperator definieren bzw. damit auseinandersetzen
-
 
 
 int main(int argc, char** argv) {
-    GroundManagement gm = GroundManagement(); //vielleicht noch umbenennen in CapycitySim //entweder Methoden der Klasse static machen oder ein Objekt davon erstellen, auf dem man operiert
+    GroundManagement gm = GroundManagement(); 
     string len = string(argv[1]);
     string wid = string(argv[2]);
     stringstream ss;
@@ -41,7 +38,7 @@ int main(int argc, char** argv) {
     ss.clear();
     ss << wid;
     ss >> gm.width;
-    gm.map = gm.createMap(gm.length, gm.width); //e
+    gm.map = gm.createMap(gm.length, gm.width); 
     gm.mainMenu();
     return 0;
 };
@@ -123,7 +120,6 @@ void GroundManagement::buildMenu() {
     }
     cout << "2. Laenge des Gebaeudes" << endl;
     cin >> buildingLength;
-    //vielleicht hier irgendwo auch den aktuellen Bauplan mal anzeigen, ganz am Anfang des buildMenu Aufrufs
     cout << "3. Breite des Gebaeudes" << endl;
     cin >> buildingWidth;
     cout << "4. x-Position, an dem das Gebaeude gebaut werden soll. Genau gesagt die x-Postition der linkeren oberen Ecke" << endl;
@@ -203,13 +199,8 @@ void GroundManagement::build(int label, int buildingLength, int buildingWidth, i
     cout << "Der Bau wurde erfolgreich abgeschlossen!" << endl;
 }
 
-void GroundManagement::reduce(Building &b) { //nicht ganz Fehlerproof, für den Fall das Gebäude gleicher Art direkt aneinander stehen
-    //checkIfOutOfBounds(buildingLength, buildingWidth, positionX, positionY);
-    //if(map[positionX + buildingLength][positionY] == type || map[positionX][positionY + buildingWidth] == type) {
-        //cout << "Bitte pruefen Sie ihre Eingabe. Es muss die exakte Laenge sowie Breite des zu verkleinernden Gebaeudes angegeben werden" << endl;
-        //return;
-    //} //check if input area is smaller than the size of a given building
-    for(int i = b.getPosX(); i < b.getPosX() + b.getLength(); i++) { //Prüfung hier nicht mehr notwendig, da sie schon beim durchgehen der BuildingList vorgenommen wird (also ob Gebäude tatsächlich existiert mit den gegebenen coords)
+void GroundManagement::reduce(Building &b) { 
+    for(int i = b.getPosX(); i < b.getPosX() + b.getLength(); i++) { 
         for(int j = b.getPosY(); j < b.getPosY() + b.getWidth(); j++) {
             if(map[i][j] != b.getLabel()) {    //check if input area corresponds with a given building (same building type?, input area bigger than a given building size?)
                 cout << "Bitte pruefen sie ihre Eingabe. Gebaeudetyp stimmt nicht mit den anderen Eingaben ueberein oder die Koordinaten sind keinem Gebaeude zuzuordnen" << endl;
