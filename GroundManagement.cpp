@@ -213,7 +213,6 @@ void GroundManagement::build(int label, int buildingLength, int buildingWidth, i
 
 void GroundManagement::reduce(Building *b) { //nicht ganz Fehlerproof, für den Fall das Gebäude gleicher Art direkt aneinander stehen
     //checkIfOutOfBounds(buildingLength, buildingWidth, positionX, positionY);
-
     for(int i = b->getPosX(); i < b->getPosX() + b->getLength(); i++) { //update map
         map[i][b->getPosY()] = 0;
     }
@@ -226,13 +225,15 @@ void GroundManagement::reduce(Building *b) { //nicht ganz Fehlerproof, für den 
     for(int i = b->getPosY(); i < b->getPosY() + b->getWidth(); i++) {
         map[b->getPosX() + b->getLength() - 1][i] = 0;
     }
-    b->setLength(b->getLength() - 2); //update Object-attributes
-    b->setWidth(b->getWidth() - 2);
-    b->setPos(b->getPosX() + 1, b->getPosY() + 1);
-    if(b->getLength() <=0 || b->getWidth() <= 0) {
+    if(b->getLength() - 2 <=0 || b->getWidth() - 2 <= 0) {
         buildingsList.erase(buildingsList.begin() + findIdx(b)); //löscht das Objekt aus der BuildingsList
+        delete b;
     } //(falls Länge und Breite = 0, wird es nicht mehr in der Liste gespeichert sondern gelöscht, wenn der Gültigkeitsbereich der Erstellung verlassen wird)
     else {
+        b->setLength(b->getLength() - 2); //update Object-attributes
+        b->setWidth(b->getWidth() - 2);
+        b->setPos(b->getPosX() + 1, b->getPosY() + 1);
+        b->updateMatList(); //Neukalkulierung der Materialliste, falls das Objekt nicht zerstört wurde
         b->setTotalPrice(b->calcPrice()); //Neukalkulierung des Preises nach dem reducen, falls das Objekt nicht schon zerstört wurde
     }
     cout << "Das Verkleinern war erfolgreich!" << endl;
@@ -261,4 +262,19 @@ int GroundManagement::findIdx(Building *b) {
         }
     }
     return 0; //Fehlerfall muss noch behandelt werden!
+}
+
+void GroundManagement::updateMap(Building* b) {
+        for(int i = b->getPosX(); i < b->getPosX() + b->getLength(); i++) { //update map
+            map[i][b->getPosY()] = 0;
+        }
+        for(int i = b->getPosX(); i < b->getPosX() + b->getLength(); i++) {
+            map[i][b->getPosY() + b->getWidth() - 1] = 0;
+        }
+        for(int i = b->getPosY(); i < b->getPosY() + b->getWidth(); i++) {
+            map[b->getPosX()][i] = 0;
+        }
+        for(int i = b->getPosY(); i < b->getPosY() + b->getWidth(); i++) {
+            map[b->getPosX() + b->getLength() - 1][i] = 0;
+        }
 }

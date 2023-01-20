@@ -28,7 +28,7 @@ class Building {
         Building(int _lenght, int _width, int _posX, int _posY);
         Building(int _posX, int _posY);
         Building() = default;
-        ~Building();
+        ~Building(); //musste ich virtual machen, damit Zeiger vom Typ Building, die auf Objekte von Memberklassen zeigen, trotzdem den Memberdestruktor aufrufen
         int getLabel();
         string getType();
         int getLength();
@@ -37,15 +37,16 @@ class Building {
         int getPosY();
         float getTotalPrice();
         virtual map<Material*, int> createMatList();
-        map<Material*, int> getMatList();
+        void updateMatList();
+        map<Material*, int>& getMatList();
         void setLength(int _length);
         void setWidth(int _width);
         void setPos(int x, int y);
         void setBasicPrice(float _price);
         void setTotalPrice(float _price);
-        virtual float calcPrice(); //Aufruf der Funktion für Building Objekt, ich will aber den Memberaufruf
+        float calcPrice(); 
         friend ostream& operator<<(ostream& os, const Building& b);
-        string printMap(Building &b, string s);
+        string printMatList(Building &b, string s);
 };
 
 #endif

@@ -24,4 +24,5 @@ class GroundManagement {
         void reduce(Building *b);
         Building* findBuilding(int posX, int posY);
         int findIdx(Building *b);
+        void updateMap(Building *b);
 };

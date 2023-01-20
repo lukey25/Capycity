@@ -9,6 +9,9 @@ To Do:
 
 - calc Price evtl. nur in Building implementieren mit Parameter, der basic_price übergibt und dann nur Aufruf in den Memberklassen mit der Preisübergabe. Weiß nicht ob das mehr Sinn macht oder nicht
 
+- Ausgabe der benötigten Mats ist random...
+- calcPrice für Mats nach reduce passt nicht
+
 
 Obacht:
 - Funktionen sollten keine Referenz auf in dem Funktionsblock erstellte lokale Variablen zurückliefern, da diese nach Aufruf der Funktion nicht mehr existieren#
