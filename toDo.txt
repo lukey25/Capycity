@@ -1,0 +1,9 @@
+To Do:
+
+- Kommentare, die das Vorgehen beschreiben bzw. Funktionen, Kontrollfluss und so weiter
+
+
+Obacht:
+- Funktionen sollten keine Referenz auf in dem Funktionsblock erstellte lokale Variablen zurückliefern, da diese nach Aufruf der Funktion nicht mehr existieren#
+- Wenn in Funktion dynamischer Speicher angelegt und Zeiger zurückgegeben, muss die Speicherverwaltung an anderer Stelle erfolgen (delete)
+- 

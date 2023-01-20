@@ -14,6 +14,10 @@ int width = 0;
 Building **buildingArea; //deklarieren eines 2 dimensionalen Arrays
 
 int main(int argc, char** argv) {
+<<<<<<< Updated upstream
+=======
+    GroudManagement gm = GroundManagement(); //vielleicht noch umbenennen in CapycitySim //entweder Methoden der Klasse static machen oder ein Objekt davon erstellen, auf dem man operiert
+>>>>>>> Stashed changes
     string len = string(argv[1]);
     string wid = string(argv[2]);
     stringstream ss;
@@ -28,6 +32,19 @@ int main(int argc, char** argv) {
     return 0;
 };
 
+<<<<<<< Updated upstream
+=======
+GroudManagement::GroundManagement() {
+    length = 0;
+    width = 0;
+    buildingsList = vector<Building*>(); //Größe defaultmäßig festgelegt
+}
+
+void GroundManagement::updateBuildingsList(Building *building) { //da braucht es vielleicht jetzt keine extra Funktion mehr
+    buildingsList.push_back(building);
+}
+
+>>>>>>> Stashed changes
 
 Building** createBuildingArea(int length, int width) {
     Building **arr = new Building*[length];
@@ -161,8 +178,19 @@ void bluePrint() {
     return;
 }
 
+<<<<<<< Updated upstream
 bool checkGround(int buildingLength, int buildingWidth, int positionX, int positionY) {
     checkIfOutOfBounds(buildingLength, buildingWidth, positionX, positionY);
+=======
+bool GroundManagement::checkGround(int buildingLength, int buildingWidth, int positionX, int positionY) {
+
+    //Prüfung, ob Gebäude in den Baugrenzen liegt
+    if(buildingLength + positionX > length || buildingWidth + positionY > width) {
+        return false; 
+    }
+
+    //Prüfung, ob Gebäude sich mit einem anderen überschneiden würde
+>>>>>>> Stashed changes
     for(int i = positionX; i < positionX + buildingLength; i++) {
         for(int j = positionY; j < positionY + buildingWidth; j++) {
             if(buildingArea[i][j] != Empty) {
@@ -182,6 +210,7 @@ void build(Building type, int buildingLength, int buildingWidth, int positionX, 
     cout << "Der Bau wurde erfolgreich abgeschlossen!" << endl;
 }
 
+<<<<<<< Updated upstream
 void reduce(int buildingLength, int buildingWidth, int positionX, int positionY, Building type) { //nicht ganz Fehlerproof, für den Fall das Gebäude gleicher Art direkt aneinander stehen
     checkIfOutOfBounds(buildingLength, buildingWidth, positionX, positionY);
     //if(buildingArea[positionX + buildingLength][positionY] == type || buildingArea[positionX][positionY + buildingWidth] == type) {
@@ -195,6 +224,11 @@ void reduce(int buildingLength, int buildingWidth, int positionX, int positionY,
                 return;
             }
         }
+=======
+void GroundManagement::reduce(Building *b) { 
+    for(int i = b->getPosX(); i < b->getPosX() + b->getLength(); i++) { //update map
+        map[i][b->getPosY()] = 0;
+>>>>>>> Stashed changes
     }
     for(int i = positionX; i < positionX + buildingLength; i++) {
         buildingArea[i][positionY] = Empty;
@@ -211,9 +245,30 @@ void reduce(int buildingLength, int buildingWidth, int positionX, int positionY,
     cout << "Das Verkleinern war erfolgreich!" << endl;
 }
 
+<<<<<<< Updated upstream
 void checkIfOutOfBounds(int inputLength, int inputWidth, int posX, int posY) {
     if(inputLength + posX > length || inputWidth + posY > width) {
         cout << "Bitte ueberpruefen Sie ihre Eingabe. Die Eingaben duerfen nicht ueber die Baugrundgrenze hinaus gehen!" << endl;
         mainMenu();
     }
 }
+=======
+Building* GroundManagement::findBuilding(int posX, int posY) {
+    for(int i = 0; i < buildingsList.size(); i++) {
+        if(buildingsList[i]->getPosX() == posX && buildingsList[i]->getPosY() == posY) {
+            return buildingsList[i];
+        }
+    }
+    return nullptr;//Fehlerfall muss noch behandelt werden
+}
+
+int GroundManagement::findIdx(Building *b) {
+    for(int i = 0; i < buildingsList.size(); i++) {
+        if(buildingsList[i]->getPosX() == b->getPosX() && buildingsList[i]->getPosY() == b->getPosY()) {
+            return i;
+        }
+    }
+    return 0; //Fehlerfall muss noch behandelt werden!
+}
+
+>>>>>>> Stashed changes
