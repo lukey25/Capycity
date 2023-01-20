@@ -21,14 +21,12 @@ class Building {
         int* coord;
         map<Material*, int> matList;
 
-        //Material* matList;
-        //Material* createMatList(int wood, int metal, int plastic);
 
     public:
         Building(int _lenght, int _width, int _posX, int _posY);
         Building(int _posX, int _posY);
         Building() = default;
-        ~Building(); //musste ich virtual machen, damit Zeiger vom Typ Building, die auf Objekte von Memberklassen zeigen, trotzdem den Memberdestruktor aufrufen
+        ~Building(); 
         int getLabel();
         string getType();
         int getLength();

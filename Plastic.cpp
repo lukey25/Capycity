@@ -6,6 +6,6 @@ Plastic::Plastic() : Material() {
     name = "Plastic";
 }
 
-float Plastic::getPrice() { //Methode müsste eigentlich auch static sein, aber dann macht das Vererben über Material auch wieder keinen Sinn
+float Plastic::getPrice() { 
     return price;
 }

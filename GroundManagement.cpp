@@ -27,12 +27,10 @@ using std::stringstream;
 using std::vector; 
 
 
-//Kopierkonstruktor + Zuweisungsoperator definieren bzw. damit auseinandersetzen
-
 
 
 int main(int argc, char** argv) {
-    GroundManagement gm = GroundManagement(); //vielleicht noch umbenennen in CapycitySim //entweder Methoden der Klasse static machen oder ein Objekt davon erstellen, auf dem man operiert
+    GroundManagement gm = GroundManagement();
     string len = string(argv[1]);
     string wid = string(argv[2]);
     stringstream ss;
@@ -49,10 +47,10 @@ int main(int argc, char** argv) {
 GroundManagement::GroundManagement() {
     length = 0;
     width = 0;
-    buildingsList = vector<Building*>(); //Größe defaultmäßig festgelegt
+    buildingsList = vector<Building*>(); //Vector, um Gebäude zu speichern
 }
 
-void GroundManagement::updateBuildingsList(Building *building) { //da braucht es vielleicht jetzt keine extra Funktion mehr
+void GroundManagement::updateBuildingsList(Building *building) { 
     buildingsList.push_back(building);
 }
 
@@ -102,7 +100,7 @@ void GroundManagement::buildMenu() {
     string input;
     int positionX;
     int positionY;
-    int buildingLength; //unsigned ints?
+    int buildingLength;
     int buildingWidth;
     int label;
     cout << "Bitte geben sie folgende Informationen in die Konsole ein:" << endl;
@@ -177,7 +175,11 @@ void GroundManagement::bluePrint() { //seperate print out function for the bluep
 }
 
 bool GroundManagement::checkGround(int buildingLength, int buildingWidth, int positionX, int positionY) {
-    checkIfOutOfBounds(buildingLength, buildingWidth, positionX, positionY);
+    //Prüfe, ob Gebäude innerhalb der Baugrenzen
+    if(buildingLength + positionX > length || buildingWidth + positionY > width) {
+        return false; 
+    }
+    ////Prüfe, ob Gebäude sich mit einem anderen überschneidet
     for(int i = positionX; i < positionX + buildingLength; i++) {
         for(int j = positionY; j < positionY + buildingWidth; j++) {
             if(map[i][j] != 0) {
@@ -211,8 +213,7 @@ void GroundManagement::build(int label, int buildingLength, int buildingWidth, i
     cout << "Der Bau wurde erfolgreich abgeschlossen!" << endl;
 }
 
-void GroundManagement::reduce(Building *b) { //nicht ganz Fehlerproof, für den Fall das Gebäude gleicher Art direkt aneinander stehen
-    //checkIfOutOfBounds(buildingLength, buildingWidth, positionX, positionY);
+void GroundManagement::reduce(Building *b) { 
     for(int i = b->getPosX(); i < b->getPosX() + b->getLength(); i++) { //update map
         map[i][b->getPosY()] = 0;
     }
@@ -227,7 +228,7 @@ void GroundManagement::reduce(Building *b) { //nicht ganz Fehlerproof, für den 
     }
     if(b->getLength() - 2 <=0 || b->getWidth() - 2 <= 0) {
         buildingsList.erase(buildingsList.begin() + findIdx(b)); //löscht das Objekt aus der BuildingsList
-        delete b;
+        delete b; //Destruktoraufruf des jeweiligen Gebäude Objekts
     } //(falls Länge und Breite = 0, wird es nicht mehr in der Liste gespeichert sondern gelöscht, wenn der Gültigkeitsbereich der Erstellung verlassen wird)
     else {
         b->setLength(b->getLength() - 2); //update Object-attributes
@@ -239,20 +240,13 @@ void GroundManagement::reduce(Building *b) { //nicht ganz Fehlerproof, für den 
     cout << "Das Verkleinern war erfolgreich!" << endl;
 }
 
-void GroundManagement::checkIfOutOfBounds(int inputLength, int inputWidth, int posX, int posY) {
-    if(inputLength + posX > length || inputWidth + posY > width) {
-        cout << "Bitte ueberpruefen Sie ihre Eingabe. Die Eingaben duerfen nicht ueber die Baugrundgrenze hinaus gehen!" << endl;
-        mainMenu(); //das ist schlecht, sollte ich am besten rausmachen oder anders lösen...
-    }
-}
-
 Building* GroundManagement::findBuilding(int posX, int posY) {
     for(int i = 0; i < buildingsList.size(); i++) {
         if(buildingsList[i]->getPosX() == posX && buildingsList[i]->getPosY() == posY) {
             return buildingsList[i];
         }
     }
-    return nullptr;//Fehlerfall muss noch behandelt werden
+    return nullptr;
 }
 
 int GroundManagement::findIdx(Building *b) {
@@ -261,20 +255,5 @@ int GroundManagement::findIdx(Building *b) {
             return i;
         }
     }
-    return 0; //Fehlerfall muss noch behandelt werden!
-}
-
-void GroundManagement::updateMap(Building* b) {
-        for(int i = b->getPosX(); i < b->getPosX() + b->getLength(); i++) { //update map
-            map[i][b->getPosY()] = 0;
-        }
-        for(int i = b->getPosX(); i < b->getPosX() + b->getLength(); i++) {
-            map[i][b->getPosY() + b->getWidth() - 1] = 0;
-        }
-        for(int i = b->getPosY(); i < b->getPosY() + b->getWidth(); i++) {
-            map[b->getPosX()][i] = 0;
-        }
-        for(int i = b->getPosY(); i < b->getPosY() + b->getWidth(); i++) {
-            map[b->getPosX() + b->getLength() - 1][i] = 0;
-        }
+    return 0;
 }

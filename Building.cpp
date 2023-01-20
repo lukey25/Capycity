@@ -24,7 +24,6 @@ Building::~Building() {
     map<Material*, int>::iterator it;
     for(it = matList.begin(); it != matList.end(); it++) {
         delete it->first;
-        cout << "test*3" << endl;
     }
 }
 
@@ -57,8 +56,7 @@ float Building::getTotalPrice() {
 }
 
 map<Material*, int>& Building::getMatList() {
-    return matList; //wenn ich sie nicht im Header initialisiere, existiert sie in Building nicht
-    //mal schauen, ob initialisieren in MemberKonstruktor sinnvoll ist oder ob man das auch außerhalb machen kann und dann nur zuweisen im Konstrukor bzw. füllen
+    return matList; 
 }
 
 void Building::setPos(int x, int y) {
@@ -103,7 +101,7 @@ ostream& operator<<(ostream& os, Building& b) {
     return os;
 }
 
-map<Material*, int> Building::createMatList() { //warum die Funktioni über Building aufgerufen werden muss ist mir schleierhaft. Und ob es überhaupt Sinn macht, die zu vererben...
+map<Material*, int> Building::createMatList() { 
     matList = map<Material*, int>(); //sicherstellen, dass die Matlist wieder zerstört wird, da dynamischer Speicher (Destructor von Material im Destructor von Building aufrufen)
     matList.insert(pair<Material*, int>(new Wood(), woodPerUnit * length * width)); //Required wood for whole building
     matList.insert(pair<Material*, int>(new Metal(), metalPerUnit * length * width)); //Required metal for whole building
@@ -119,15 +117,15 @@ void Building::updateMatList() { //wohl auch nicht die generischste Lösung
     it->second = plasticPerUnit * length * width;
 }
 
-float Building::calcPrice() { //muss ich hier jetzt Building oder Solarpower mit Bereichsoperator verwenden? Wenn ich die Funktion von Building überschreiben will //die Funktion hab ich sicherheitshalber hier reingepackt, weil ich immer zuerst die Matlist updaten muss, wenn ich den Preis aktualisieren will
-    float result = 0.0f; //Methode sollte bestenfalls vererbt werden um Redundanz zu vermeiden, jedoch schwierig wenn statische Variablen der Memberklasse verwendet werden
+float Building::calcPrice() { 
+    float result = 0.0f; 
     float matPrice = 0.0f;
     map<Material*, int>::iterator it; //nicht unbedingt notwendig, kann man auch mit auto direkt in der loop definieren + initialisieren
     for(it = matList.begin(); it != matList.end(); it++) { //calculate mat price for whole building
-        Material* temp = it->first; //Kopierkonstruktor Aufruf? -> implementieren?
+        Material* temp = it->first; 
         matPrice += temp->getPrice() * it->second; 
     }
-    result += length * width * basicPrice + matPrice; //wieso kann ich auf basic_price nicht zugreifen?
+    result += length * width * basicPrice + matPrice; 
     return result;
 }
 

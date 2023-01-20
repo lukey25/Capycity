@@ -3,10 +3,10 @@
 
 using std::string;
 
-class Material { //bestenfalls abstract machen
+class Material { 
     public:
         Material() = default;
-        virtual float getPrice() = 0; //abstract machen
+        virtual float getPrice() = 0; 
         string getName() {return name;};
     protected:
         string name;
